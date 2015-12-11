@@ -5,8 +5,8 @@ Servo tilt;
 
 int panPos, tiltPos;
 int spinDelay = 500;
-int panPin = 9;
-int tiltPin = 10;
+#define PANPIN 9;
+#define TILTPIN 10;
 
 //Actually useful functions
 void movePan(int pos){
@@ -54,25 +54,15 @@ void setSpinDelay(int i){
 }
 
 int getPanPin(){
-  return panPin; 
-}
-
-void setPanPin(int i){
-  panPin = i; 
+  return PANPIN; 
 }
 
 int getTiltPin(){
-  return tiltPin; 
+  return TILTPIN; 
 }
-
-void setTiltPin(int i){
-  tiltPin = i; 
-}
-
-
 
 //Testing
-void testMotors() 
+int testMotors() 
 {   
   for(int i = 30; i < 150; i++){
     movePan(i);
@@ -85,5 +75,7 @@ void testMotors()
     moveTilt(i);
     delaySpin();
   }
+  
+  return 0;
 }
 

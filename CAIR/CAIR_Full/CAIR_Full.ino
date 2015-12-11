@@ -2,8 +2,9 @@
 
 void setup() {
   initiateCI(); //set up pins for child identification
+  Serial.begin(9600);
 }
 
 void loop() {
-  testMotors();
+  testCI();
 }
