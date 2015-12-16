@@ -1,3 +1,5 @@
+//Measures ambient temperature
+
 //On DHT11
 //1 - VDD
 //2 - DATA
@@ -29,11 +31,13 @@ void measureTemperature(){
 		Serial.println("Unknown error"); 
 		break;
   }
+  
+  setTemperature(((tempSensor.temperature*9)/5) + 32); //converts stored temperature to Fahrenheit
 }
 
 //Mildly useful (for display purposes
 void displayTemperature(){
-  Serial.print("Temperature (°C): ");
+  Serial.print("Temperature (°F): ");
   Serial.println((float)getTemperature(), 2);
 }
 
@@ -47,8 +51,12 @@ int getTempSensorPin(){
   return TEMPSENSORPIN; 
 }
 
-int getTemperature(){
-  return tempSensor.temperature; 
+int getTemperature(){ //returns temperature (Fahrenheit)
+  return temperature; 
+}
+
+void setTemperature(int i){
+  temperature = i; 
 }
 
 int getHumidity(){

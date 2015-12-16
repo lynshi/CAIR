@@ -1,3 +1,5 @@
+//Controls servos
+
 #include <Servo.h>
 
 Servo pan;
@@ -67,13 +69,13 @@ int testMotors()
   for(int i = 30; i < 150; i++){
     movePan(i);
     moveTilt(i);
-    delaySpin();
+    delay(50);
   }
   
   for(int i = 150; i > 30; i--){
     movePan(i);
     moveTilt(i);
-    delaySpin();
+    delay(50);
   }
   
   return 0;
