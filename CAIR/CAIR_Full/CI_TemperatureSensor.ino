@@ -11,8 +11,8 @@
 dht11 tempSensor;
 #define TEMPSENSORPIN 8
 
-int senseDelay = 3000;
-int temperature;
+int senseDelay = 1000;
+double temperature;
 
 //Actually useful functions
 void measureTemperature(){
@@ -51,16 +51,24 @@ int getTempSensorPin(){
   return TEMPSENSORPIN; 
 }
 
-int getTemperature(){ //returns temperature (Fahrenheit)
+double getTemperature(){ //returns temperature (Fahrenheit)
   return temperature; 
 }
 
-void setTemperature(int i){
+void setTemperature(double i){
   temperature = i; 
 }
 
 int getHumidity(){
   return tempSensor.humidity; 
+}
+
+void setSenseDelay(int i){
+  senseDelay = i;
+}
+
+int getSenseDelay(){
+  return senseDelay; 
 }
 
 //Testing

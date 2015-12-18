@@ -6,7 +6,7 @@ Servo pan;
 Servo tilt;
 
 int panPos, tiltPos;
-int spinDelay = 500;
+int spinDelay = 50;
 #define PANPIN 9;
 #define TILTPIN 10;
 
@@ -69,13 +69,13 @@ int testMotors()
   for(int i = 30; i < 150; i++){
     movePan(i);
     moveTilt(i);
-    delay(50);
+    delaySpin();
   }
   
   for(int i = 150; i > 30; i--){
     movePan(i);
     moveTilt(i);
-    delay(50);
+    delaySpin();
   }
   
   return 0;
