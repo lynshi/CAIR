@@ -33,6 +33,16 @@ void testCI(){
     Serial.println("Temperature sensor is not working :'("); 
   }
   delay(getCITestDelay());
+  
+  Serial.println("TESTING POWER DETECTION");
+  delay(getCITestDelay());
+  if(testPowerDetection() == 0){
+    Serial.println("Power detection is working :D");
+  }
+  else{
+    Serial.println("Power detection is not working"); 
+  }
+  delay(getCITestDelay());
 }
 
 int getCITestDelay(){

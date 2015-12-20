@@ -47,10 +47,6 @@ void displayHumidity(){ //humidity doesn't matter to CAIR
 }
 
 //Gets and Sets
-int getTempSensorPin(){
-  return TEMPSENSORPIN; 
-}
-
 double getTemperature(){ //returns temperature (Fahrenheit)
   return temperature; 
 }

@@ -66,3 +66,18 @@ void setCarVoltageStatus(bool s){
 bool getCarVoltageStatus(){
   return carVoltageStatus; 
 }
+
+//Testing
+int testPowerDetection(){ //WORK HERE
+  while(!checkCarVoltageStatus()){ //waiting for car to turn on
+    Serial.println("Car is OFF and voltage is currently: " + getCarVoltage() + "V");   
+  }
+  
+  while(checkCarVoltageStatus()){ //waiting for car to turn off
+    Serial.println("Car is ON and voltage is currently: " + getCarVoltage() + "V");;   
+  }
+  
+  Serial.println("Car is OFF and voltage is currently: " + getCarVoltage() + "V");
+  
+  return 0;
+}

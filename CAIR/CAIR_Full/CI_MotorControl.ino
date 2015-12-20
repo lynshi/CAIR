@@ -26,8 +26,8 @@ void delaySpin(){
 }
 
 void motorSetup(){
-  pan.attach(getPanPin());
-  tilt.attach(getTiltPin());
+  pan.attach(PANPIN);
+  tilt.attach(TILTPIN);
 }
 
 //Gets and Sets
@@ -55,26 +55,34 @@ void setSpinDelay(int i){
   spinDelay = i; 
 }
 
-int getPanPin(){
-  return PANPIN; 
-}
-
-int getTiltPin(){
-  return TILTPIN; 
-}
-
 //Testing
 int testMotors() 
 {   
   for(int i = 30; i < 150; i++){
     movePan(i);
+    if(getPanPos() != i){
+      Serial.println("Error: Pan motor at incorrect position!");
+      return 1;
+    }
     moveTilt(i);
+    if(getTiltPos() != i){
+      Serial.println("Error: Tilt motor at incorrect position!");
+      return 2;
+    }
     delaySpin();
   }
   
   for(int i = 150; i > 30; i--){
     movePan(i);
+    if(getPanPos() != i){
+      Serial.println("Error: Pan motor at incorrect position!");
+      return 1;
+    }
     moveTilt(i);
+    if(getTiltPos() != i){
+      Serial.println("Error: Tilt motor at incorrect position!");
+      return 2;
+    }
     delaySpin();
   }
   
