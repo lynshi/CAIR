@@ -1,6 +1,6 @@
 //reads the voltage coming from the car battery to determine whether the car is on
 
-#define CARPIN A0
+#define CARPIN A1
 
 double carVoltage;
 bool carVoltageStatus;
@@ -68,16 +68,29 @@ bool getCarVoltageStatus(){
 }
 
 //Testing
-int testPowerDetection(){ //WORK HERE
+int testPowerDetection(){
   while(!checkCarVoltageStatus()){ //waiting for car to turn on
-    Serial.println("Car is OFF and voltage is currently: " + getCarVoltage() + "V");   
+    Serial.print("Car is OFF and voltage is currently: ");
+    Serial.print(getCarVoltage());
+    Serial.println("V");   
   }
   
   while(checkCarVoltageStatus()){ //waiting for car to turn off
-    Serial.println("Car is ON and voltage is currently: " + getCarVoltage() + "V");;   
+    Serial.print("Car is ON and voltage is currently: ");
+    Serial.print(getCarVoltage());
+    Serial.println("V");
   }
   
-  Serial.println("Car is OFF and voltage is currently: " + getCarVoltage() + "V");
+  Serial.print("Car is OFF and voltage is currently: ");
+  Serial.print(getCarVoltage());
+  Serial.println("V");
   
   return 0;
+}
+
+void testReadVoltage(){
+  readCarVoltage();
+  Serial.print("Voltage is currently: ");
+  Serial.print(getCarVoltage());
+  Serial.println("V");
 }

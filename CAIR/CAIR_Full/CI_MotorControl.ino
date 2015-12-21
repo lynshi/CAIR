@@ -7,8 +7,8 @@ Servo tilt;
 
 int panPos, tiltPos;
 int spinDelay = 50;
-#define PANPIN 9;
-#define TILTPIN 10;
+#define PANPIN 9
+#define TILTPIN 10
 
 //Actually useful functions
 void movePan(int pos){
