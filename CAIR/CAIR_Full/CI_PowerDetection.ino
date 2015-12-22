@@ -1,6 +1,8 @@
 //reads the voltage coming from the car battery to determine whether the car is on
 
 #define CARPIN A1
+#define RLARGE 302400
+#define RSMALL 99000
 
 double carVoltage;
 bool carVoltageStatus;
@@ -33,8 +35,15 @@ bool checkCarVoltageStatus(){ //Return values: 1 car is on, 0 car is off.
 //Mildly useful functions
 void readCarVoltage(){
   setCarVoltage(analogRead(CARPIN));
-  map(carVoltage, 0, 1023, 0, 5000); //map uses integer values. 3 decimal points are needed so the mapped-to value is scaled up by 1000
-  setCarVoltage(getCarVoltage()/1000*4); //scales voltage back down (e.g. 3125 -> 3.125) and converts to voltage at car battery (0-20)
+//  Serial.println("ANALOGREAD: "); //testing
+//  Serial.println(getCarVoltage()); 
+//  delay(1000);
+//  setCarVoltage(map(carVoltage, 0, 1023, 0, 5000)); //map uses integer values. 3 decimal points are needed so the mapped-to value is scaled up by 1000
+//  Serial.println("MAP: "); //testing
+//  Serial.println(getCarVoltage()); 
+//  delay(1000);
+//  setCarVoltage((getCarVoltage()/(double)1000)*(double)4); //scales voltage back down (e.g. 3125 -> 3.125) and converts to voltage at car battery (0-20)
+  setCarVoltage((map(getCarVoltage(), 0, 1023, 0, 5000)/(double)1000)*(double)(RLARGE + RSMALL)/(double)RSMALL + 0.40); //scales voltage back down (e.g. 3125 -> 3.125) and converts to voltage at car battery (0-20). Also acounts for error)
 }
 
 void powerDetectionSetup(){
@@ -90,6 +99,8 @@ int testPowerDetection(){
 
 void testReadVoltage(){
   readCarVoltage();
+//  Serial.print("Divided Voltage is currently: ");
+//  Serial.print(getCarVoltage()*(double)RSMALL/(double)(RSMALL+RLARGE));
   Serial.print("Voltage is currently: ");
   Serial.print(getCarVoltage());
   Serial.println("V");
