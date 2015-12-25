@@ -3,6 +3,7 @@
 #define CARPIN A1
 #define RLARGE 302400
 #define RSMALL 99000
+#define VADJUST 0.40
 
 double carVoltage;
 bool carVoltageStatus;
@@ -43,7 +44,7 @@ void readCarVoltage(){
 //  Serial.println(getCarVoltage()); 
 //  delay(1000);
 //  setCarVoltage((getCarVoltage()/(double)1000)*(double)4); //scales voltage back down (e.g. 3125 -> 3.125) and converts to voltage at car battery (0-20)
-  setCarVoltage((map(getCarVoltage(), 0, 1023, 0, 5000)/(double)1000)*(double)(RLARGE + RSMALL)/(double)RSMALL + 0.40); //scales voltage back down (e.g. 3125 -> 3.125) and converts to voltage at car battery (0-20). Also acounts for error)
+  setCarVoltage((map(getCarVoltage(), 0, 1023, 0, 5000)/(double)1000)*(double)(RLARGE + RSMALL)/(double)RSMALL + VADJUST); //scales voltage back down (e.g. 3125 -> 3.125) and converts to voltage at car battery (0-20). Also acounts for error)
 }
 
 void powerDetectionSetup(){

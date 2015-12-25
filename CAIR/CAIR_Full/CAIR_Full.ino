@@ -6,7 +6,7 @@ void setup() {
 }
 
 void loop() {
-  //testCI();
-  testReadVoltage();
-  delay(getCITestDelay());
+  testCI();
+//  testReadVoltage();
+//  delay(getCITestDelay());
 }
