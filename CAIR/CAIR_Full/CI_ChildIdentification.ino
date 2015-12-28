@@ -1,11 +1,33 @@
 //Initiates Child Identification Module
 //Provides functions to test Child Identification Module
 
+void activateCI(){
+  bool temp;
+  temp = getCarVoltageStatus();
+  if(temp == 0){ //if car is still off end process
+    return; 
+  }
+  controlPower(checkCarVoltageStatus());
+  if(temp != getCarVoltageStatus()){ //if car was on and turns off start child identification
+    runCI();
+  }
+}
+
+void runCI(){ //monitor temperature and look for a child
+  while(!checkTemperature()){
+    if(checkCarVoltageStatus()){ //if car turns back on while the temperature is being monitored, break entire child identification process
+      return;
+    } 
+  }
+  
+//  temperature has now crossed threshold. Check for a child.
+}
+
 void initiateCI(){
   motorSetup(); //prepares servos
   //temperature sensor pin
-  powerDetectionSetup(); //power detection pin
   //thermal sensor pin (I2C)
+  powerDetectionSetup(); //power detection pin PUT THIS LAST
 }
 
 int ciTestDelay = 500;

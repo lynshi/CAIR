@@ -62,11 +62,15 @@ int testMotors()
     movePan(i);
     if(getPanPos() != i){
       Serial.println("Error: Pan motor at incorrect position!");
+      Serial.print("Position should be: ");
+      Serial.println(getPanPos());
       return 1;
     }
     moveTilt(i);
     if(getTiltPos() != i){
       Serial.println("Error: Tilt motor at incorrect position!");
+      Serial.print("Position should be: ");
+      Serial.println(getTiltPos());
       return 2;
     }
     delaySpin();
@@ -76,11 +80,15 @@ int testMotors()
     movePan(i);
     if(getPanPos() != i){
       Serial.println("Error: Pan motor at incorrect position!");
+      Serial.print("Position should be: ");
+      Serial.println(getPanPos());
       return 1;
     }
     moveTilt(i);
     if(getTiltPos() != i){
       Serial.println("Error: Tilt motor at incorrect position!");
+      Serial.print("Position should be: ");
+      Serial.println(getTiltPos());
       return 2;
     }
     delaySpin();

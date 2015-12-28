@@ -10,6 +10,8 @@
 
 dht11 tempSensor;
 #define TEMPSENSORPIN 8
+#define TEMPADJUST 0 
+#define TEMPTHRESHOLD 60
 
 int senseDelay = 1000;
 double temperature;
@@ -32,7 +34,19 @@ void measureTemperature(){
 		break;
   }
   
-  setTemperature(((tempSensor.temperature*9)/5) + 32); //converts stored temperature to Fahrenheit
+  setTemperature(((tempSensor.temperature*9)/5) + 32 - TEMPADJUST); //converts stored temperature to Fahrenheit and adjusts for internal error
+}
+
+int checkTemperature(){ //return 0 below threshold, 1 >= threshold
+  measureTemperature();
+  displayTemperature(); //FOR DEMONSTRATION ONLY NOT IN FINAL PRODUCT----------------------------------------------------------------------------------------------------
+  delay(1000);
+  if(getTemperature() < TEMPTHRESHOLD){
+    return 0; 
+  }
+  else{
+    return 1; 
+  }
 }
 
 //Mildly useful (for display purposes

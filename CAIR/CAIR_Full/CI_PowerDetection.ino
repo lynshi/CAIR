@@ -4,32 +4,50 @@
 #define RLARGE 302400
 #define RSMALL 99000
 #define VADJUST 0.40
+#define CARPOWERSHUTOFFPIN 11
+#define MOSFETON 1
+#define MOSFETOFF 0
 
 double carVoltage;
 bool carVoltageStatus;
 int carVoltageReadDelay = 50;
 
-//Most important function
+//Most important functions
 bool checkCarVoltageStatus(){ //Return values: 1 car is on, 0 car is off.
   if(getCarVoltageStatus()){ //if 1, car was on. If 0, car was off.
     for(int i = 0; i < 5; i++){
       readCarVoltage();
       if(getCarVoltage() >= 14){
+        setCarVoltageStatus(1);
         return 1; 
       }
       delay(getCarVoltageReadDelay());
     }
+    digitalWrite(CARPOWERSHUTOFFPIN, MOSFETOFF);
+    setCarVoltageStatus(0);
     return 0; 
   }
   else{
     for(int i = 0; i < 5; i++){
       readCarVoltage();
       if(getCarVoltage() < 14){
+        setCarVoltageStatus(0);
         return 0; 
       }
       delay(getCarVoltageReadDelay());
     }
+    digitalWrite(CARPOWERSHUTOFFPIN, MOSFETON);
+    setCarVoltageStatus(1);
     return 1; 
+  }
+}
+
+void controlPower(bool stat){ //shuts off car power from UPS when car is off
+  if(stat == 0){
+    digitalWrite(CARPOWERSHUTOFFPIN, MOSFETOFF);
+  }
+  else if(stat == 1){
+    digitalWrite(CARPOWERSHUTOFFPIN, MOSFETON);
   }
 }
 
@@ -49,7 +67,14 @@ void readCarVoltage(){
 
 void powerDetectionSetup(){
   pinMode(CARPIN, INPUT);
-  setCarVoltageStatus(0); 
+  pinMode(CARPOWERSHUTOFFPIN, OUTPUT);
+  controlPower(checkCarVoltageStatus()); 
+  if(getCarVoltageStatus()){ //accounts for if car is on upon activation of CAIR
+    digitalWrite(CARPOWERSHUTOFFPIN, MOSFETON);
+    runCI();
+    return;
+  }
+  digitalWrite(CARPOWERSHUTOFFPIN, MOSFETOFF); //if car was off continue to operate CAIR normally and don't jump to child identification
 }
 
 //Gets and sets
