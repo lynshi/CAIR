@@ -15,6 +15,7 @@ void activateCI(){
 
 void runCI(){ //monitor temperature and look for a child
   while(!checkTemperature()){
+    delay(getTempSenseDelay());
     if(checkCarVoltageStatus()){ //if car turns back on while the temperature is being monitored, break entire child identification process
       return;
     } 
@@ -36,16 +37,16 @@ void testCI(){
   Serial.println("CHILD IDENTIFICATION MODULE TEST PROGRAM");
   delay(getCITestDelay());
   
-  Serial.println("TESTING MOTORS");
-  delay(getCITestDelay());
-  if(testMotors() == 0){
-    Serial.println("Motor testing successful!");
-  }
-  else{
-    Serial.println("Motor testing unsuccessful :(");
-  }
-  delay(getCITestDelay());
-  
+//  Serial.println("TESTING MOTORS");
+//  delay(getCITestDelay());
+//  if(testMotors() == 0){
+//    Serial.println("Motor testing successful!");
+//  }
+//  else{
+//    Serial.println("Motor testing unsuccessful :(");
+//  }
+//  delay(getCITestDelay());
+//  
   Serial.println("TESTING TEMPERATURE SENSOR");
   delay(getCITestDelay());
   if(testTempSensor() == 0){

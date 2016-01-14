@@ -108,18 +108,20 @@ int testPowerDetection(){
     Serial.print("Car is OFF and voltage is currently: ");
     Serial.print(getCarVoltage());
     Serial.println("V");   
+    delay(1000);
   }
   
   while(checkCarVoltageStatus()){ //waiting for car to turn off
     Serial.print("Car is ON and voltage is currently: ");
     Serial.print(getCarVoltage());
     Serial.println("V");
+    delay(1000);
   }
   
   Serial.print("Car is OFF and voltage is currently: ");
   Serial.print(getCarVoltage());
   Serial.println("V");
-  
+  delay(1000);
   return 0;
 }
 

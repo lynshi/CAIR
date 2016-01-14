@@ -13,7 +13,7 @@ dht11 tempSensor;
 #define TEMPADJUST 0 
 #define TEMPTHRESHOLD 60
 
-int senseDelay = 1000;
+int tempSenseDelay = 2000;
 double temperature;
 
 //Actually useful functions
@@ -34,6 +34,7 @@ void measureTemperature(){
 		break;
   }
   
+  //setTemperature(tempSensor.temperature); //Celsius
   setTemperature(((tempSensor.temperature*9)/5) + 32 - TEMPADJUST); //converts stored temperature to Fahrenheit and adjusts for internal error
 }
 
@@ -51,7 +52,7 @@ int checkTemperature(){ //return 0 below threshold, 1 >= threshold
 
 //Mildly useful (for display purposes
 void displayTemperature(){
-  Serial.print("Temperature (°F): ");
+  Serial.print("Temperature (F): ");
   Serial.println((float)getTemperature(), 2);
 }
 
@@ -73,18 +74,19 @@ int getHumidity(){
   return tempSensor.humidity; 
 }
 
-void setSenseDelay(int i){
-  senseDelay = i;
+void setTempSenseDelay(int i){
+  tempSenseDelay = i;
 }
 
-int getSenseDelay(){
-  return senseDelay; 
+int getTempSenseDelay(){
+  return tempSenseDelay; 
 }
 
 //Testing
 int testTempSensor() {
+  delay(getTempSenseDelay());
   measureTemperature();
-  displayHumidity();
+  //displayHumidity();
   displayTemperature();  
   return 0;
 }
