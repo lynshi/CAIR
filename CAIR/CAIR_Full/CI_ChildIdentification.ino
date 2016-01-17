@@ -2,26 +2,32 @@
 //Provides functions to test Child Identification Module
 
 void activateCI(){
-  bool temp;
-  temp = getCarVoltageStatus();
-  if(temp == 0){ //if car is still off end process
+  if(checkCarVoltageStatus() == 0){ //if car is still off end process
+    Serial.println("Car is OFF");
+    displayCarVoltage(); 
     return; 
   }
-  controlPower(checkCarVoltageStatus());
-  if(temp != getCarVoltageStatus()){ //if car was on and turns off start child identification
+  else{
+    while(checkCarVoltageStatus()){
+      Serial.println("Car is ON");
+      displayCarVoltage(); 
+    }
+    Serial.println("Car has turned OFF");
     runCI();
   }
 }
 
 void runCI(){ //monitor temperature and look for a child
-  while(!checkTemperature()){
-    delay(getTempSenseDelay());
+  while(!checkTemperatureStatus()){
     if(checkCarVoltageStatus()){ //if car turns back on while the temperature is being monitored, break entire child identification process
+      Serial.println("Car is back on");
       return;
     } 
+    delay(getTempSenseDelay());
   }
   
-//  temperature has now crossed threshold. Check for a child.
+  Serial.println("Temperature has crossed 60 degree F threshold");
+//  temperature has now crossed threshold. Check for a child. CHECK FOR TEMPERATURE AGAIN BEFORE CALLING PARENT IF CHILD IS FOUND.
 }
 
 void initiateCI(){
@@ -47,15 +53,15 @@ void testCI(){
 //  }
 //  delay(getCITestDelay());
 //  
-  Serial.println("TESTING TEMPERATURE SENSOR");
-  delay(getCITestDelay());
-  if(testTempSensor() == 0){
-    Serial.println("Temperature sensor is working :D");
-  }
-  else{
-    Serial.println("Temperature sensor is not working :'("); 
-  }
-  delay(getCITestDelay());
+//  Serial.println("TESTING TEMPERATURE SENSOR");
+//  delay(getCITestDelay());
+//  if(testTempSensor() == 0){
+//    Serial.println("Temperature sensor is working :D");
+//  }
+//  else{
+//    Serial.println("Temperature sensor is not working :'("); 
+//  }
+//  delay(getCITestDelay());
   
 //  Serial.println("TESTING POWER DETECTION");
 //  delay(getCITestDelay());

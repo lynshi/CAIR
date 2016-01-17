@@ -7,9 +7,9 @@
 // Number of samples 
 #define NUMS 5
 // Beta value for our thermistor
-#define BCOEFFICIENT 3700
+#define BCOEFFICIENT 3500
 // Value of the series resistor
-#define SERIESRESISTOR 1150
+#define SERIESRESISTOR 998
 
 int reads[NUMS];
 int i;
@@ -50,7 +50,7 @@ Serial.print(temperature);
 Serial.println(" *C");                        // Convert it to Celsius
 temperature = (temperature*(9.0/5.0)+32);
 Serial.print(temperature);
-Serial.println(" *C");
+Serial.println(" *F");
 
 delay(500);
 }

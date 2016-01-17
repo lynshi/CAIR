@@ -23,7 +23,7 @@ bool checkCarVoltageStatus(){ //Return values: 1 car is on, 0 car is off.
       }
       delay(getCarVoltageReadDelay());
     }
-    digitalWrite(CARPOWERSHUTOFFPIN, MOSFETOFF);
+    controlPower(MOSFETOFF);
     setCarVoltageStatus(0);
     return 0; 
   }
@@ -36,11 +36,11 @@ bool checkCarVoltageStatus(){ //Return values: 1 car is on, 0 car is off.
       }
       delay(getCarVoltageReadDelay());
     }
-    digitalWrite(CARPOWERSHUTOFFPIN, MOSFETON);
+    controlPower(MOSFETON);
     setCarVoltageStatus(1);
     return 1; 
   }
-}
+} 
 
 void controlPower(bool stat){ //shuts off car power from UPS when car is off
   if(stat == 0){
@@ -103,24 +103,28 @@ bool getCarVoltageStatus(){
 }
 
 //Testing
+
+void displayCarVoltage(){
+   Serial.print("Car voltage is currently: ");
+   Serial.print(getCarVoltage());
+   Serial.println("V"); 
+}
+
 int testPowerDetection(){
   while(!checkCarVoltageStatus()){ //waiting for car to turn on
-    Serial.print("Car is OFF and voltage is currently: ");
-    Serial.print(getCarVoltage());
-    Serial.println("V");   
+    Serial.println("Car is OFF");
+    displayCarVoltage();
     delay(1000);
   }
   
   while(checkCarVoltageStatus()){ //waiting for car to turn off
-    Serial.print("Car is ON and voltage is currently: ");
-    Serial.print(getCarVoltage());
-    Serial.println("V");
+    Serial.print("Car is ON");
+    displayCarVoltage();
     delay(1000);
   }
   
-  Serial.print("Car is OFF and voltage is currently: ");
-  Serial.print(getCarVoltage());
-  Serial.println("V");
+  Serial.print("Car is OFF");
+  displayCarVoltage();
   delay(1000);
   return 0;
 }
@@ -129,7 +133,5 @@ void testReadVoltage(){
   readCarVoltage();
 //  Serial.print("Divided Voltage is currently: ");
 //  Serial.print(getCarVoltage()*(double)RSMALL/(double)(RSMALL+RLARGE));
-  Serial.print("Voltage is currently: ");
-  Serial.print(getCarVoltage());
-  Serial.println("V");
+  displayCarVoltage();
 }

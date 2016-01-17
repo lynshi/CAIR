@@ -32,17 +32,21 @@ void loop()
   // step 3: instruct sensor to return a particular echo reading
  
   Wire.beginTransmission(0x0a);
- 
+  Serial.println("Break1"); 
   Wire.write(byte(0x4c));      // sets register pointer to echo #1 register (0x02)
  
-  Wire.endTransmission(false);      // stop transmitting
+  if(Wire.endTransmission(false) != 0){      // stop transmitting
+    Serial.println("BROKEN!!!");
+    delay(10000);
+  }
+  
+    Serial.println("Break2");
  
   // step 4: request reading from sensor
  
   Wire.requestFrom(0x0a, 32);    // request 2 bytes from slave device #112
  
- 
- 
+  Serial.println("Break3"); 
   // step 5: receive reading from sensor
  
   count=0;
@@ -50,7 +54,8 @@ void loop()
   while(count<32)
  
   {
- 
+ Serial.print("Count NOT AVAILABLE: "); 
+    Serial.println(count);
   if(2 <= Wire.available())    // if two bytes were received
  
   {
@@ -64,7 +69,8 @@ void loop()
     Serial.print(" ");
  
     count+=2;
- 
+    Serial.print("Count: "); 
+    Serial.println(count);
   }
  
   }
