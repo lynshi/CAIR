@@ -44,14 +44,14 @@ void loop()
  
   // step 4: request reading from sensor
  
-  Wire.requestFrom(0x0a, 32);    // request 2 bytes from slave device #112
+  Wire.requestFrom(0x0a, 34);    // request 2 bytes from slave device #112
  
   Serial.println("Break3"); 
   // step 5: receive reading from sensor
  
   count=0;
  
-  while(count<32)
+  while(count<34)
  
   {
  Serial.print("Count NOT AVAILABLE: "); 
