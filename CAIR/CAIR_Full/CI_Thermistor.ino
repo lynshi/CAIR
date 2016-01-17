@@ -1,7 +1,7 @@
 //measure ambient temperature
 
 // Pin that the thermistor is connected to
-#define PINTHERMISTOR A0
+#define PINTHERMISTOR A1
 // Nominal temperature value for the thermistor
 #define THERMISTORNOMINAL 1000
 // Nominl temperature depicted on the datasheet

@@ -1,6 +1,6 @@
 //reads the voltage coming from the car battery to determine whether the car is on
 
-#define CARPIN A1
+#define CARPIN A0
 #define RLARGE 302400
 #define RSMALL 99000
 #define VADJUST 0.40
