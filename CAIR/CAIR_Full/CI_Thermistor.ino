@@ -58,7 +58,7 @@ void measureTemperature() {
   temperature /= BCOEFFICIENT;                   // 1/B * ln(R/Ro)
   temperature += 1.0 / (TEMPERATURENOMINAL + 273.15); // + (1/To)
   temperature = 1.0 / temperature;                 // Invert the value
-//  temperature -= 273.15; 
+  temperature -= 273.15; 
 //  Serial.print("The sensor temperature is: ");
 //  Serial.print(temperature);
 //  Serial.println(" *C");                        // Convert it to Celsius

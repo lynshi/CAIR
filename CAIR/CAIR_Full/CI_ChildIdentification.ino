@@ -4,13 +4,15 @@
 void activateCI(){
   if(checkCarVoltageStatus() == 0){ //if car is still off end process
     Serial.println("Car is OFF");
-    displayCarVoltage(); 
+    displayCarVoltage();
+    delay(getCarVoltageReadDelay()); 
     return; 
   }
   else{
     while(checkCarVoltageStatus()){
       Serial.println("Car is ON");
       displayCarVoltage(); 
+      delay(getCarVoltageReadDelay());
     }
     Serial.println("Car has turned OFF");
     runCI();
@@ -27,6 +29,7 @@ void runCI(){ //monitor temperature and look for a child
   }
   
   Serial.println("Temperature has crossed 60 degree F threshold");
+  delay(10000);
 //  temperature has now crossed threshold. Check for a child. CHECK FOR TEMPERATURE AGAIN BEFORE CALLING PARENT IF CHILD IS FOUND.
 }
 

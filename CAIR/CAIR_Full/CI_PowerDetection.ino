@@ -10,7 +10,7 @@
 
 double carVoltage;
 bool carVoltageStatus;
-int carVoltageReadDelay = 50;
+int carVoltageReadDelay = 100;
 
 //Most important functions
 bool checkCarVoltageStatus(){ //Return values: 1 car is on, 0 car is off.
