@@ -40,19 +40,18 @@ void runCI(){ //monitor temperature and look for a child
 }
 
 void findChild(){ //rotates servos to take measurements with thermal sensor
-  movePan(SERVOLOWERBOUND);
-  moveTilt(SERVOLOWERBOUND);
-  delay(getThermalReadDelay());
-  readThermalSensor();
-  
   for(int x = 0; x < getThermalTiltBufferSize(); x++){
+    moveTilt(x * 60 + 30);
     for(int i = SERVOLOWERBOUND; i <= SERVOHIGHERBOUND; i += 120 / (getThermalPanBufferSize() / 17)){
-      delay(getThermalReadDelay());
+      movePan(i);
       readThermalSensor();
+      delay(getThermalReadDelay());
     }  
     setThermalTiltBufferPointer(getThermalTiltBufferPointer() + 1);
     setThermalPanBufferPointer(0);
   }
+  
+  outputThermalData(); //outputs thermal data in tabular format; for MP2 demo purposes only
 }
 
 void initiateCI(){

@@ -10,20 +10,16 @@
 #define THERMALPANBUFFERSIZE 68
 #define THERMALTILTBUFFERSIZE 3
 
-int reading;
 int thermalReadDelay = 500;
-int count;
 int thermalPanBufferPointer;
 int thermalTiltBufferPointer;
 
-double thermalPanBuffer[THERMALTILTBUFFERSIZE][THERMALPANBUFFERSIZE];
+double thermalBuffer[THERMALTILTBUFFERSIZE][THERMALPANBUFFERSIZE];
  
 void thermalSensorSetup(){
   Wire.begin(); 
   thermalPanBufferPointer = 0;
   thermalTiltBufferPointer = 0;
-  count = 0;
-  reading = 0;
 }
  
 void readThermalSensor()
@@ -50,7 +46,8 @@ void readThermalSensor()
   //Serial.println("Break3"); 
   // step 5: receive reading from sensor
  
-  count=0;
+  int count=0;
+  int reading = 0;
  
   while(count<34){
   //Serial.print("Count NOT AVAILABLE: "); 
@@ -62,7 +59,7 @@ void readThermalSensor()
    
       reading += Wire.read()<<8;
       
-      setThermalBuffer(reading, (count/2) + (getThermalPanBufferPointer() * 17));
+      setThermalBuffer(reading, getThermalTiltBufferPointer(), (count/2) + (getThermalPanBufferPointer() * 17));
    
       //Serial.print(reading);   // print the reading
    
@@ -81,6 +78,16 @@ void readThermalSensor()
   //delay(60000);
 }
 
+void outputThermalData(){
+  for(int x = 0; x < THERMALTILTBUFFERSIZE; x++){
+    for(int i = 0; i < THERMALPANBUFFERSIZE; i++){
+      Serial.print(getThermalBuffer(x, i) / 10);
+      Serial.print(" ");
+    }
+    Serial.println("");
+  }
+}
+
 int getThermalPanBufferPointer(){
   return thermalPanBufferPointer;
 }
@@ -97,20 +104,28 @@ void setThermalReadDelay(int d){
    thermalReadDelay = d; 
 }
 
-double getThermalBuffer(int i){
-  if(i > THERMALPANBUFFERSIZE || i < 0){
-    Serial.println("Thermal Buffer Access Error");
+double getThermalBuffer(int i, int j){
+  if(j >= THERMALPANBUFFERSIZE || j < 0){
+    Serial.println("Thermal Buffer Pan Access Error");
     return 0; 
   }
-  return thermalPanBuffer[getThermalTiltBufferPointer()][i]; 
+  if(i >= THERMALPANBUFFERSIZE || i < 0){
+    Serial.println("Thermal Buffer Tilt Access Error");
+    return 0; 
+  }
+  return thermalBuffer[i][j]; 
 }
 
-void setThermalBuffer(double val, int i){
-  if(i > THERMALPANBUFFERSIZE || i < 0){
-    Serial.println("Thermal Buffer Setting Error");
+void setThermalBuffer(double val, int i, int j){
+  if(j > THERMALPANBUFFERSIZE || j < 0){
+    Serial.println("Error setting thermal buffer pan data");
     return; 
   }
-  thermalPanBuffer[getThermalTiltBufferPointer()][i] = val; 
+  if(i >= THERMALPANBUFFERSIZE || i < 0){
+    Serial.println("Error setting thermal buffer tilt data");
+    return 0; 
+  }
+  thermalBuffer[i][j] = val; 
 }
 
 void setThermalTiltBufferPointer(int i){
