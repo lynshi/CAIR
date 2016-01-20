@@ -1,6 +1,10 @@
 //Initiates Child Identification Module
 //Provides functions to test Child Identification Module
 
+#define SERVOLOWERBOUND 30
+#define SERVOHIGHERBOUND 150
+//#define SERVOROTATEINCREMENTS 10
+
 void activateCI(){
   if(checkCarVoltageStatus() == 0){ //if car is still off end process
     Serial.println("Car is OFF");
@@ -29,14 +33,32 @@ void runCI(){ //monitor temperature and look for a child
   }
   
   Serial.println("Temperature has crossed 60 degree F threshold");
-  delay(10000);
-//  temperature has now crossed threshold. Check for a child. CHECK FOR TEMPERATURE AGAIN BEFORE CALLING PARENT IF CHILD IS FOUND.
+  //  temperature has now crossed threshold. Check for a child. CHECK FOR TEMPERATURE AGAIN BEFORE CALLING PARENT IF CHILD IS FOUND.
+  
+  findChild();
+  //delay(10000);
+}
+
+void findChild(){ //rotates servos to take measurements with thermal sensor
+  movePan(SERVOLOWERBOUND);
+  moveTilt(SERVOLOWERBOUND);
+  delay(getThermalReadDelay());
+  readThermalSensor();
+  
+  for(int x = 0; x < getThermalTiltBufferSize(); x++){
+    for(int i = SERVOLOWERBOUND; i <= SERVOHIGHERBOUND; i += 120 / (getThermalPanBufferSize() / 17)){
+      delay(getThermalReadDelay());
+      readThermalSensor();
+    }  
+    setThermalTiltBufferPointer(getThermalTiltBufferPointer() + 1);
+    setThermalPanBufferPointer(0);
+  }
 }
 
 void initiateCI(){
   motorSetup(); //prepares servos
   //temperature sensor pin
-  //thermal sensor pin (I2C)
+  thermalSensorSetup();//thermal sensor pin (I2C)
   powerDetectionSetup(); //power detection pin PUT THIS LAST
 }
 
