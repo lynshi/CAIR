@@ -3,13 +3,13 @@
 // Pin that the thermistor is connected to
 #define PINTHERMISTOR A1
 // Nominal temperature value for the thermistor
-#define THERMISTORNOMINAL 1215.0
+#define THERMISTORNOMINAL 900 //1298 //1215.0
 // Nominl temperature depicted on the datasheet
-#define TEMPERATURENOMINAL 19.6
+#define TEMPERATURENOMINAL 25.0 //19.4 //19.6
 // Number of samples 
 #define NUMS 5
 // Beta value for our thermistor
-#define BCOEFFICIENT 3000.0
+#define BCOEFFICIENT 3800.0
 // Value of the series resistor
 #define SERIESRESISTOR 1000.0
 
