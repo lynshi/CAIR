@@ -54,8 +54,6 @@ void loop()
   while(count<34)
  
   {
- Serial.print("Count NOT AVAILABLE: "); 
-    Serial.println(count);
   if(2 <= Wire.available())    // if two bytes were received
  
   {
@@ -69,14 +67,14 @@ void loop()
     Serial.print(" ");
  
     count+=2;
-    Serial.print("Count: "); 
-    Serial.println(count);
+    //Serial.print("Count: "); 
+    //Serial.println(count);
   }
  
   }
   //while(Wire.available()<1);
   //reading = Wire.read();
  
-  Serial.println();
+  Serial.println("END");
   delay(60000);
 }

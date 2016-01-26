@@ -7,10 +7,10 @@
 //3 SDA I2C(5V) Data line
 //4 SCL I2C(5V) Clock line
 
-#define THERMALPANBUFFERSIZE 68
-#define THERMALTILTBUFFERSIZE 3
+#define THERMALPANBUFFERSIZE 16
+#define THERMALTILTBUFFERSIZE 12
 
-int thermalReadDelay = 500;
+int thermalReadDelay = 1500;
 int thermalPanBufferPointer;
 int thermalTiltBufferPointer;
 
@@ -25,11 +25,7 @@ void thermalSensorSetup(){
 void readThermalSensor()
  
 {
- 
-  // step 3: instruct sensor to return a particular echo reading
- 
   Wire.beginTransmission(0x0a);
-  //Serial.println("Break1"); 
   Wire.write(byte(0x4c));      // sets register pointer to echo #1 register (0x02)
  
   if(Wire.endTransmission(false) != 0){      // stop transmitting
@@ -50,8 +46,8 @@ void readThermalSensor()
   int reading = 0;
  
   while(count<34){
-  //Serial.print("Count NOT AVAILABLE: "); 
-  //Serial.println(count);
+   
+
   if(2 <= Wire.available())    // if two bytes were received
     {
    
@@ -59,17 +55,25 @@ void readThermalSensor()
    
       reading += Wire.read()<<8;
       
-      setThermalBuffer(reading, getThermalTiltBufferPointer(), (count/2) + (getThermalPanBufferPointer() * 17));
-   
+      if(count != 0){
+        if((((count - 2) / 2) % 4) == 0 && (count > 2)){
+          setThermalTiltBufferPointer(1 + getThermalTiltBufferPointer());
+        }
+        setThermalBuffer(reading, getThermalTiltBufferPointer(), getThermalPanBufferPointer() + (((count - 2) / 2) % 4));
+      }
       //Serial.print(reading);   // print the reading
    
       //Serial.print(" ");
+      
+//      Serial.print("Count: "); 
+//      Serial.println(count);
+//      Serial.print("Pan Pointer: ");
+//      Serial.println(getThermalPanBufferPointer());
+//      Serial.print("Tilt Pointer: ");
+//      Serial.println(getThermalTiltBufferPointer());
    
       count+=2;
-      //Serial.print("Count: "); 
-      //Serial.println(count);
     }
-    setThermalPanBufferPointer(getThermalPanBufferPointer() + 1);
   }
   //while(Wire.available()<1);
   //reading = Wire.read();
@@ -80,12 +84,29 @@ void readThermalSensor()
 
 void outputThermalData(){
   for(int x = 0; x < THERMALTILTBUFFERSIZE; x++){
-    for(int i = 0; i < THERMALPANBUFFERSIZE; i++){
-      Serial.print(getThermalBuffer(x, i) / 10);
-      Serial.print(" ");
+    if(x % 4 == 0){
+      for(int i = 0; i < THERMALPANBUFFERSIZE * 6 - 1; i++){
+        Serial.print("_");
+      }
+      Serial.println("__________");
     }
-    Serial.println("");
+    Serial.print("| ");
+    for(int i = 0; i < THERMALPANBUFFERSIZE; i++){
+      Serial.print(getThermalBuffer(x, i) / 10.0);
+      if(i % 4 != 3){
+        Serial.print(" ");
+      }
+      else if (i % 4 == 3 && i != THERMALPANBUFFERSIZE - 1){
+        Serial.print(" | ");  
+      }
+    }
+    Serial.println(" |");
   }
+  
+  for(int i = 0; i < THERMALPANBUFFERSIZE * 6 - 1; i++){
+    Serial.print("_");
+  }
+  Serial.println("__________");
 }
 
 int getThermalPanBufferPointer(){
@@ -105,11 +126,11 @@ void setThermalReadDelay(int d){
 }
 
 double getThermalBuffer(int i, int j){
-  if(j >= THERMALPANBUFFERSIZE || j < 0){
+  if((j >= THERMALPANBUFFERSIZE) || (j < 0)){
     Serial.println("Thermal Buffer Pan Access Error");
     return 0; 
   }
-  if(i >= THERMALPANBUFFERSIZE || i < 0){
+  if((i >= THERMALTILTBUFFERSIZE) || (i < 0)){
     Serial.println("Thermal Buffer Tilt Access Error");
     return 0; 
   }
@@ -117,13 +138,13 @@ double getThermalBuffer(int i, int j){
 }
 
 void setThermalBuffer(double val, int i, int j){
-  if(j > THERMALPANBUFFERSIZE || j < 0){
+  if((j >= THERMALPANBUFFERSIZE) || (j < 0)){
     Serial.println("Error setting thermal buffer pan data");
     return; 
   }
-  if(i >= THERMALPANBUFFERSIZE || i < 0){
+  if((i >= THERMALTILTBUFFERSIZE) || (i < 0)){
     Serial.println("Error setting thermal buffer tilt data");
-    return 0; 
+    return; 
   }
   thermalBuffer[i][j] = val; 
 }

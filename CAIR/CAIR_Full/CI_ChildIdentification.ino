@@ -40,22 +40,22 @@ void runCI(){ //monitor temperature and look for a child
 }
 
 void findChild(){ //rotates servos to take measurements with thermal sensor
-  for(int x = 0; x < getThermalTiltBufferSize(); x++){
-    moveTilt(x * 60 + 30);
-    for(int i = SERVOLOWERBOUND; i <= SERVOHIGHERBOUND; i += 120 / (getThermalPanBufferSize() / 17)){
+  for(int x = 0; x < (getThermalTiltBufferSize() / 4); x++){
+    moveTilt(120 - x * 30);
+    for(int i = SERVOHIGHERBOUND; i >=  SERVOLOWERBOUND; i -= ((SERVOHIGHERBOUND - SERVOLOWERBOUND) / ((getThermalPanBufferSize() / 4) - 1))){
+      setThermalTiltBufferPointer(x * 4);
+      setThermalPanBufferPointer(((SERVOHIGHERBOUND - i) / 40) * 4);
       movePan(i);
-      readThermalSensor();
       delay(getThermalReadDelay());
+      readThermalSensor();
     }  
-    setThermalTiltBufferPointer(getThermalTiltBufferPointer() + 1);
-    setThermalPanBufferPointer(0);
   }
   
   outputThermalData(); //outputs thermal data in tabular format; for MP2 demo purposes only
 }
 
 void initiateCI(){
-  motorSetup(); //prepares servos
+  //motorSetup(); //prepares servos NOT NEEDED
   //temperature sensor pin
   thermalSensorSetup();//thermal sensor pin (I2C)
   powerDetectionSetup(); //power detection pin PUT THIS LAST

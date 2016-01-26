@@ -1,12 +1,12 @@
 //reads the voltage coming from the car battery to determine whether the car is on
 
 #define CARPIN A0
-#define RLARGE 302400
+#define RLARGE 312180
 #define RSMALL 99000
 #define VADJUST 0.40
 #define CARPOWERSHUTOFFPIN 11
-#define MOSFETON 1
-#define MOSFETOFF 0
+#define MOSFETON 0
+#define MOSFETOFF 1
 
 double carVoltage;
 bool carVoltageStatus;
@@ -44,10 +44,10 @@ bool checkCarVoltageStatus(){ //Return values: 1 car is on, 0 car is off.
 
 void controlPower(bool stat){ //shuts off car power from UPS when car is off
   if(stat == 0){
-    digitalWrite(CARPOWERSHUTOFFPIN, MOSFETOFF);
+    digitalWrite(CARPOWERSHUTOFFPIN, LOW);
   }
   else if(stat == 1){
-    digitalWrite(CARPOWERSHUTOFFPIN, MOSFETON);
+    digitalWrite(CARPOWERSHUTOFFPIN, HIGH);
   }
 }
 

@@ -12,22 +12,25 @@ int spinDelay = 50;
 
 //Actually useful functions
 void movePan(int pos){
+  pan.attach(PANPIN);
+  delay(100);
   setPanPos(pos);
   pan.write(getPanPos());
+  delay(500);
+  pan.detach();
 }
 
 void moveTilt(int pos){
+  tilt.attach(TILTPIN);
+  delay(100);
   setTiltPos(pos);
   tilt.write(getTiltPos()); 
+  delay(500);
+  tilt.detach();
 }
 
 void delaySpin(){
   delay(getSpinDelay()); 
-}
-
-void motorSetup(){
-  pan.attach(PANPIN);
-  tilt.attach(TILTPIN);
 }
 
 //Gets and Sets
