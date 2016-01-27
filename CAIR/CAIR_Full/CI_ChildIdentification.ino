@@ -52,6 +52,7 @@ void findChild(){ //rotates servos to take measurements with thermal sensor
   }
   
   outputThermalData(); //outputs thermal data in tabular format; for MP2 demo purposes only
+  outputThermalDataP();
 }
 
 void initiateCI(){

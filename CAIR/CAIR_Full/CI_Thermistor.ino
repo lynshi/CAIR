@@ -9,7 +9,7 @@
 // Number of samples 
 #define NUMS 5
 // Beta value for our thermistor
-#define BCOEFFICIENT 3800.0
+#define BCOEFFICIENT 3400.0
 // Value of the series resistor
 #define SERIESRESISTOR 1000.0
 
