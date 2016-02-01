@@ -7,6 +7,7 @@
 #define CARPOWERSHUTOFFPIN 11
 #define MOSFETON 0
 #define MOSFETOFF 1
+#define VOLTAGETHRESHOLD 13.25
 
 double carVoltage;
 bool carVoltageStatus;
@@ -52,9 +53,9 @@ bool getCarVoltageStatus(){
 //Most important functions
 bool checkCarVoltageStatus(){ //Return values: 1 car is on, 0 car is off.
   if(getCarVoltageStatus()){ //if 1, car was on. If 0, car was off.
-    for(int i = 0; i < 5; i++){
+    for(int i = 0; i < 45; i++){
       readCarVoltage();
-      if(getCarVoltage() >= 14){
+      if(getCarVoltage() >= VOLTAGETHRESHOLD){
         setCarVoltageStatus(1);
         return 1; 
       }
@@ -65,9 +66,9 @@ bool checkCarVoltageStatus(){ //Return values: 1 car is on, 0 car is off.
     return 0; 
   }
   else{
-    for(int i = 0; i < 5; i++){
+    for(int i = 0; i < 45; i++){
       readCarVoltage();
-      if(getCarVoltage() < 14){
+      if(getCarVoltage() < VOLTAGETHRESHOLD){
         setCarVoltageStatus(0);
         return 0; 
       }
