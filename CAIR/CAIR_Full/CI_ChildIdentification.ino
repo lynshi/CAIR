@@ -2,7 +2,7 @@
 //Provides functions to test Child Identification Module
 
 #define SERVOLOWERBOUND 30
-#define SERVOHIGHERBOUND 150
+#define SERVOHIGHERBOUND 135
 //#define SERVOROTATEINCREMENTS 10
 
 int ciTestDelay = 500;
@@ -59,14 +59,14 @@ void findChild(){ //rotates servos to take measurements with thermal sensor
     moveTilt(120 - x * 30);
     for(int i = SERVOHIGHERBOUND; i >=  SERVOLOWERBOUND; i -= ((SERVOHIGHERBOUND - SERVOLOWERBOUND) / ((getThermalPanBufferSize() / 4) - 1))){
       setThermalTiltBufferPointer(x * 4);
-      setThermalPanBufferPointer(((SERVOHIGHERBOUND - i) / 40) * 4);
+      setThermalPanBufferPointer(((SERVOHIGHERBOUND - i) / ((SERVOHIGHERBOUND - SERVOLOWERBOUND) / ((getThermalPanBufferSize() / 4) - 1))) * 4);
       movePan(i);
       delay(getThermalReadDelay());
       readThermalSensor();
     }  
   } 
   outputThermalData(); //outputs thermal data in tabular format; for MP2 demo purposes only
-  outputThermalDataP();
+  //outputThermalDataP();
 }
 
 void testCI(){
