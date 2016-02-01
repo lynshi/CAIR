@@ -12,6 +12,43 @@ double carVoltage;
 bool carVoltageStatus;
 int carVoltageReadDelay = 100;
 
+void powerDetectionSetup(){
+  pinMode(CARPIN, INPUT);
+  pinMode(CARPOWERSHUTOFFPIN, OUTPUT);
+  controlPower(checkCarVoltageStatus()); 
+  if(getCarVoltageStatus()){ //accounts for if car is on upon activation of CAIR
+    digitalWrite(CARPOWERSHUTOFFPIN, MOSFETON);
+    runCI();
+    return;
+  }
+  digitalWrite(CARPOWERSHUTOFFPIN, MOSFETOFF); //if car was off continue to operate CAIR normally and don't jump to child identification
+}
+
+//Gets and sets
+double getCarVoltage(){
+  return carVoltage; 
+}
+
+void setCarVoltage(double i){
+  carVoltage = i; 
+}
+
+void setCarVoltageReadDelay(int i){
+  carVoltageReadDelay = i; 
+}
+
+int getCarVoltageReadDelay(){
+  return carVoltageReadDelay; 
+}
+
+void setCarVoltageStatus(bool s){
+  carVoltageStatus = s;
+}
+
+bool getCarVoltageStatus(){
+  return carVoltageStatus; 
+}
+
 //Most important functions
 bool checkCarVoltageStatus(){ //Return values: 1 car is on, 0 car is off.
   if(getCarVoltageStatus()){ //if 1, car was on. If 0, car was off.
@@ -65,45 +102,7 @@ void readCarVoltage(){
   setCarVoltage((map(getCarVoltage(), 0, 1023, 0, 5000)/(double)1000)*(double)(RLARGE + RSMALL)/(double)RSMALL + VADJUST); //scales voltage back down (e.g. 3125 -> 3.125) and converts to voltage at car battery (0-20). Also acounts for error)
 }
 
-void powerDetectionSetup(){
-  pinMode(CARPIN, INPUT);
-  pinMode(CARPOWERSHUTOFFPIN, OUTPUT);
-  controlPower(checkCarVoltageStatus()); 
-  if(getCarVoltageStatus()){ //accounts for if car is on upon activation of CAIR
-    digitalWrite(CARPOWERSHUTOFFPIN, MOSFETON);
-    runCI();
-    return;
-  }
-  digitalWrite(CARPOWERSHUTOFFPIN, MOSFETOFF); //if car was off continue to operate CAIR normally and don't jump to child identification
-}
-
-//Gets and sets
-double getCarVoltage(){
-  return carVoltage; 
-}
-
-void setCarVoltage(double i){
-  carVoltage = i; 
-}
-
-void setCarVoltageReadDelay(int i){
-  carVoltageReadDelay = i; 
-}
-
-int getCarVoltageReadDelay(){
-  return carVoltageReadDelay; 
-}
-
-void setCarVoltageStatus(bool s){
-  carVoltageStatus = s;
-}
-
-bool getCarVoltageStatus(){
-  return carVoltageStatus; 
-}
-
 //Testing
-
 void displayCarVoltage(){
    Serial.print("Car voltage is currently: ");
    Serial.print(getCarVoltage());
@@ -115,14 +114,12 @@ int testPowerDetection(){
     Serial.println("Car is OFF");
     displayCarVoltage();
     delay(1000);
-  }
-  
+  }  
   while(checkCarVoltageStatus()){ //waiting for car to turn off
     Serial.print("Car is ON");
     displayCarVoltage();
     delay(1000);
-  }
-  
+  }  
   Serial.print("Car is OFF");
   displayCarVoltage();
   delay(1000);

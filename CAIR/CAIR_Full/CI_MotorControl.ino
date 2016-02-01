@@ -1,39 +1,19 @@
 //Controls servos
-
 #include <Servo.h>
 
-Servo pan;
-Servo tilt;
-
-int panPos, tiltPos;
-int spinDelay = 50;
 #define PANPIN 9
 #define TILTPIN 10
 
-//Actually useful functions
-void movePan(int pos){
-  pan.attach(PANPIN);
-  delay(100);
-  setPanPos(pos);
-  pan.write(getPanPos());
-  delay(500);
-  pan.detach();
-}
+Servo pan;
+Servo tilt;
+int panPos, tiltPos;
+int spinDelay = 50;
 
-void moveTilt(int pos){
-  tilt.attach(TILTPIN);
-  delay(100);
-  setTiltPos(pos);
-  tilt.write(getTiltPos()); 
-  delay(500);
-  tilt.detach();
-}
-
+//Gets and Sets
 void delaySpin(){
   delay(getSpinDelay()); 
 }
 
-//Gets and Sets
 int getPanPos(){
   return panPos; 
 }
@@ -58,6 +38,25 @@ void setSpinDelay(int i){
   spinDelay = i; 
 }
 
+//Actually useful functions
+void movePan(int pos){
+  pan.attach(PANPIN);
+  delay(100);
+  setPanPos(pos);
+  pan.write(getPanPos());
+  delay(500);
+  pan.detach();
+}
+
+void moveTilt(int pos){
+  tilt.attach(TILTPIN);
+  delay(100);
+  setTiltPos(pos);
+  tilt.write(getTiltPos()); 
+  delay(500);
+  tilt.detach();
+}
+
 //Testing
 int testMotors() 
 {   
@@ -78,7 +77,6 @@ int testMotors()
     }
     delaySpin();
   }
-  
   for(int i = 150; i > 30; i--){
     movePan(i);
     if(getPanPos() != i){
@@ -95,8 +93,6 @@ int testMotors()
       return 2;
     }
     delaySpin();
-  }
-  
+  } 
   return 0;
 }
-
