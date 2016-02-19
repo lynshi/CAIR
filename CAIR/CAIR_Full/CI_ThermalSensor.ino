@@ -7,7 +7,7 @@
 #define THERMALPANBUFFERSIZE 16
 #define THERMALTILTBUFFERSIZE 12
 
-int thermalReadDelay = 1500;
+int thermalReadDelay = 500;
 int thermalPanBufferPointer;
 int thermalTiltBufferPointer;
 int thermalBuffer[THERMALTILTBUFFERSIZE][THERMALPANBUFFERSIZE];

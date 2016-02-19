@@ -3,7 +3,7 @@
 #define CARPIN A0
 #define RLARGE 312180
 #define RSMALL 99000
-#define VADJUST 0.40
+#define VADJUST 0.00
 #define CARPOWERSHUTOFFPIN 11
 #define MOSFETON 0
 #define MOSFETOFF 1

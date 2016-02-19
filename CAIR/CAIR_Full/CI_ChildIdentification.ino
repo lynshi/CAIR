@@ -24,16 +24,17 @@ void initiateCI(){
 
 void activateCI(){
   if(checkCarVoltageStatus() == 0){ //if car is still off end process
-    Serial.println("Car is OFF");
-    displayCarVoltage();
-    delay(getCarVoltageReadDelay()); 
+//    Serial.println("Car is OFF");
+//    displayCarVoltage();
+//    delay(getCarVoltageReadDelay()); 
     return; 
   }
   else{
+    Serial.println("Car has turned ON");
     while(checkCarVoltageStatus()){
-      Serial.println("Car is ON");
-      displayCarVoltage(); 
-      delay(getCarVoltageReadDelay());
+//      Serial.println("Car is ON");
+//      displayCarVoltage(); 
+//      delay(getCarVoltageReadDelay());
     }
     Serial.println("Car has turned OFF");
     runCI();
