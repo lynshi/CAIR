@@ -24,7 +24,7 @@ void initiateCI(){
 
 void activateCI(){
   if(checkCarVoltageStatus() == 0){ //if car is still off end process
-//    Serial.println("Car is OFF");
+    Serial.println("Car is OFF");
 //    displayCarVoltage();
 //    delay(getCarVoltageReadDelay()); 
     return; 
@@ -49,7 +49,7 @@ void runCI(){ //monitor temperature and look for a child
     } 
     delay(getTempSenseDelay());
   }
-  Serial.println("Temperature has crossed 60 degree F threshold");
+  //Serial.println("Temperature has crossed 60 degree F threshold");
   //  temperature has now crossed threshold. Check for a child. CHECK FOR TEMPERATURE AGAIN BEFORE CALLING PARENT IF CHILD IS FOUND.
   findChild();
   //delay(10000);
@@ -68,6 +68,13 @@ void findChild(){ //rotates servos to take measurements with thermal sensor
   } 
   outputThermalData(); //outputs thermal data in tabular format; for MP2 demo purposes only
   //outputThermalDataP();
+  
+  if(childSearch()){
+    //CALL FOR HELP  
+  }
+  else{
+    //DO MOTION DETECTION GARBAGE
+  }
 }
 
 void testCI(){
