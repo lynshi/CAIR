@@ -11,7 +11,13 @@ void setup()
 {
   size(1000,800);   //window size
   port = new Serial(this, "COM4", 115200);   //serial port and baud rate
+  if(port.available() >0)
+  {
+  if(port.lastChar() == '~')
+  {
   port.bufferUntil('.');    //read string until '.' read
+  }
+  }
 }
 
 void draw()

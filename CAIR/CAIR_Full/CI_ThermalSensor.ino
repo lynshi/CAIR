@@ -138,16 +138,18 @@ void outputThermalData(){
   Serial.println("__________");
 }
 
-void outputThermalDataP(){
-  Serial.end();
-  Serial.begin(115200);
-  for(int x = 0; x < THERMALTILTBUFFERSIZE; x++){
-    for(int i = 0; i < THERMALPANBUFFERSIZE; i++){
-      Serial.print(getThermalBuffer(x, i));
-      Serial.print(" ");
-    }
-  }
-  Serial.print(".");
-  Serial.end();
-  Serial.begin(9600);
-}
+//void outputThermalDataP(){
+//  
+//  Serial.end();
+//  Serial.begin(115200);
+//  Serial.print("@");
+//  for(int x = 0; x < THERMALTILTBUFFERSIZE; x++){
+//    for(int i = 0; i < THERMALPANBUFFERSIZE; i++){
+//      Serial.print(getThermalBuffer(x, i));
+//      Serial.print(" ");
+//    }
+//  }
+//  Serial.print('.');
+//  Serial.end();
+//  Serial.begin(9600);
+//}
