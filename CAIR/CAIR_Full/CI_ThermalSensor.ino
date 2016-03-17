@@ -6,16 +6,49 @@
 //4 SCL I2C(5V) Clock line
 #define THERMALPANBUFFERSIZE 16
 #define THERMALTILTBUFFERSIZE 12
+#define HOTTHRESHOLD 270
 
-int thermalReadDelay = 1500;
+int thermalReadDelay = 500;
 int thermalPanBufferPointer;
 int thermalTiltBufferPointer;
 int thermalBuffer[THERMALTILTBUFFERSIZE][THERMALPANBUFFERSIZE];
 
 void thermalSensorSetup(){
   Wire.begin(); 
-  thermalPanBufferPointer = 0;
-  thermalTiltBufferPointer = 0;
+  setThermalPanBufferPointer(0);
+  setThermalTiltBufferPointer(0);
+}
+
+int childSearch(){ //looks for a child; 1 if there is a child, 0 if not
+  setThermalPanBufferPointer(0);
+  setThermalTiltBufferPointer(0);
+  int hotPixels = 0;
+  while(1){
+    for(int i = 0; i < 3; i++){
+      for(int j = 0; j < 3; j++){
+        if(getThermalBuffer(i + getThermalPanBufferPointer(),j + getThermalTiltBufferPointer()) >= HOTTHRESHOLD){
+          hotPixels++;  
+        }
+      }  
+    }
+    if(hotPixels >= 5){
+      return 1;
+    }
+    else{
+      hotPixels = 0;
+      if(getThermalPanBufferPointer() == 14){
+        setThermalPanBufferPointer(0);
+        setThermalTiltBufferPointer(getThermalTiltBufferPointer() + 1);  
+      }
+      else{
+        setThermalPanBufferPointer(getThermalPanBufferPointer() + 1);  
+      }
+      if(getThermalTiltBufferPointer == 11){
+        break;  
+      }
+    }
+  }
+  return 0;
 }
  
  void setThermalTiltBufferPointer(int i){
@@ -138,18 +171,12 @@ void outputThermalData(){
   Serial.println("__________");
 }
 
-//void outputThermalDataP(){
-//  
-//  Serial.end();
-//  Serial.begin(115200);
-//  Serial.print("@");
-//  for(int x = 0; x < THERMALTILTBUFFERSIZE; x++){
-//    for(int i = 0; i < THERMALPANBUFFERSIZE; i++){
-//      Serial.print(getThermalBuffer(x, i));
-//      Serial.print(" ");
-//    }
-//  }
-//  Serial.print('.');
-//  Serial.end();
-//  Serial.begin(9600);
-//}
+void outputThermalDataP(){
+  for(int x = 0; x < THERMALTILTBUFFERSIZE; x++){
+    for(int i = 0; i < THERMALPANBUFFERSIZE; i++){
+      Serial.print(getThermalBuffer(x, i));
+      Serial.print(" ");
+    }
+  }
+  Serial.println(".");
+}

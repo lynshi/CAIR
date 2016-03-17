@@ -7,11 +7,10 @@ void setup() {
 
 void loop() {
   //only have two functions. House call functions within CI and CI within motion detection
-  //activateCI();
+  activateCI();
   //detectMotion();
-  //Serial.println("Test");
-  findChild();
-  Serial.println("Done");
-  delay(6000);
+
+  //findChild();
+  //delay(60000);
   //ALWAYS CONTINUALLY CHECK TO MAKE SURE CAR DOESN'T TURN BACK ON OR TEMPERATURE DROPS BELOW
 }

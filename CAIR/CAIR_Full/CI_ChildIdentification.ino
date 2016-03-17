@@ -2,7 +2,7 @@
 //Provides functions to test Child Identification Module
 
 #define SERVOLOWERBOUND 30
-#define SERVOHIGHERBOUND 150
+#define SERVOHIGHERBOUND 135
 //#define SERVOROTATEINCREMENTS 10
 
 int ciTestDelay = 500;
@@ -25,15 +25,16 @@ void initiateCI(){
 void activateCI(){
   if(checkCarVoltageStatus() == 0){ //if car is still off end process
     Serial.println("Car is OFF");
-    displayCarVoltage();
-    delay(getCarVoltageReadDelay()); 
+//    displayCarVoltage();
+//    delay(getCarVoltageReadDelay()); 
     return; 
   }
   else{
+    Serial.println("Car has turned ON");
     while(checkCarVoltageStatus()){
-      Serial.println("Car is ON");
-      displayCarVoltage(); 
-      delay(getCarVoltageReadDelay());
+//      Serial.println("Car is ON");
+//      displayCarVoltage(); 
+//      delay(getCarVoltageReadDelay());
     }
     Serial.println("Car has turned OFF");
     runCI();
@@ -48,7 +49,7 @@ void runCI(){ //monitor temperature and look for a child
     } 
     delay(getTempSenseDelay());
   }
-  Serial.println("Temperature has crossed 60 degree F threshold");
+  //Serial.println("Temperature has crossed 60 degree F threshold");
   //  temperature has now crossed threshold. Check for a child. CHECK FOR TEMPERATURE AGAIN BEFORE CALLING PARENT IF CHILD IS FOUND.
   findChild();
   //delay(10000);
@@ -59,7 +60,7 @@ void findChild(){ //rotates servos to take measurements with thermal sensor
     moveTilt(120 - x * 30);
     for(int i = SERVOHIGHERBOUND; i >=  SERVOLOWERBOUND; i -= ((SERVOHIGHERBOUND - SERVOLOWERBOUND) / ((getThermalPanBufferSize() / 4) - 1))){
       setThermalTiltBufferPointer(x * 4);
-      setThermalPanBufferPointer(((SERVOHIGHERBOUND - i) / 40) * 4);
+      setThermalPanBufferPointer(((SERVOHIGHERBOUND - i) / ((SERVOHIGHERBOUND - SERVOLOWERBOUND) / ((getThermalPanBufferSize() / 4) - 1))) * 4);
       movePan(i);
       delay(getThermalReadDelay());
       readThermalSensor();
@@ -67,6 +68,13 @@ void findChild(){ //rotates servos to take measurements with thermal sensor
   } 
   outputThermalData(); //outputs thermal data in tabular format; for MP2 demo purposes only
   //outputThermalDataP();
+  
+  if(childSearch()){
+    //CALL FOR HELP  
+  }
+  else{
+    //DO MOTION DETECTION GARBAGE
+  }
 }
 
 void testCI(){
