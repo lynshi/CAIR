@@ -26,12 +26,17 @@ int childSearch(){ //looks for a child; 1 if there is a child, 0 if not
   while(1){
     for(int i = 0; i < 3; i++){
       for(int j = 0; j < 3; j++){
-        if(getThermalBuffer(i + getThermalPanBufferPointer(),j + getThermalTiltBufferPointer()) >= HOTTHRESHOLD){
+        if(getThermalBuffer(i + getThermalTiltBufferPointer(),j + getThermalPanBufferPointer()) >= HOTTHRESHOLD){
           hotPixels++;  
         }
       }  
     }
-    if(hotPixels >= 5){
+    if(hotPixels >= 5){ //so I can see what's going on
+      for(int i = 0; i < 3; i++){
+        for(int j = 0; j < 3; j++){
+          setThermalBuffer(0,i + getThermalTiltBufferPointer(),j + getThermalPanBufferPointer());
+        }  
+      }
       return 1;
     }
     else{
@@ -43,7 +48,7 @@ int childSearch(){ //looks for a child; 1 if there is a child, 0 if not
       else{
         setThermalPanBufferPointer(getThermalPanBufferPointer() + 1);  
       }
-      if(getThermalTiltBufferPointer == 11){
+      if(getThermalTiltBufferPointer() == 11){
         break;  
       }
     }
