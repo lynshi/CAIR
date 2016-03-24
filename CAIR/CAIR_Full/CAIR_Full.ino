@@ -1,8 +1,9 @@
- //Main file
+//Main file
 
 void setup() {
+  Serial.begin(115200);
+  initiateCOM();
   initiateCI(); //set up pins for child identification PUT THIS LAST
-  Serial.begin(9600);
 }
 
 void loop() {

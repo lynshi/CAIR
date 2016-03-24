@@ -1,8 +1,8 @@
 // FONA Incoming Call Number Example
 // Listens for a call and displays the phone number of the caller (if available).
 // Use this example to add phone call detection to your own FONA sketch.
-#include "Adafruit_FONA.h"
-#include "PCM.h"
+#include <Adafruit_FONA.h>
+#include <PCM.h>
 
 // Pins which are connected to the FONA.
 // Note that this is different from FONAtest!
