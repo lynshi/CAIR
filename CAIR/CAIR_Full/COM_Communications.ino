@@ -75,7 +75,7 @@ void initiateCOM(){
     return;
   }
   Serial.println(F("FONA is OK"));
-  setupGSM(); 
+ // setupGSM(); 
   setupGPS();
 }
 
@@ -89,22 +89,18 @@ void setupGPS(){
 }
 
 //HERE IS THE GSM PART
-void setupGSM() {
-//  // Enable incoming call notification.
-//  if(fona.callerIdNotification(true, FONA_RI_INTERRUPT)) {
-//    Serial.println(F("Caller id notification enabled."));
-//  }
-//  else {
-//    Serial.println(F("Caller id notification disabled"));
-//  }
-}
+//void setupGSM() {
+////  // Enable incoming call notification.
+////  if(fona.callerIdNotification(true, FONA_RI_INTERRUPT)) {
+////    Serial.println(F("Caller id notification enabled."));
+////  }
+////  else {
+////    Serial.println(F("Caller id notification disabled"));
+////  }
+//}
 
 void placeCall(){
-//  while (! Serial.available() ) { //WHAT DOES THIS DO
-//    if (fona.available()) {
-//      Serial.write(fona.read());
-//    }
-//  }
+
 
   if (!fona.callPhone(number)) {
     Serial.println(F("Failed"));
@@ -131,11 +127,7 @@ void giveCoordinates(){
 //    Serial.print("Orig = ");
 //    Serial.println(orig,6);
   }
-//  while (! Serial.available() ) { //WHAT DOES THIS DO
-//    if (fona.available()) {
-//      Serial.write(fona.read());
-//    }
-//  }  
+ 
 }
 
 void selectNumber(int coord){ 
