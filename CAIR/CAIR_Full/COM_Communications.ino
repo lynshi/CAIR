@@ -85,12 +85,47 @@ void initiateCOM(){
 }
 
 //HERE IS THE GPS PART
-void getCoordinates(){
+void getCoord(){
   boolean gps_success = fona.getGPS(&latitude, &longitude, &speed_kph, &heading, &altitude);
+  convertCoord();
 }
 
 void setupGPS(){
   fona.enableGPS(true); 
+}
+
+void setLong(float x ){
+  longitude = x;  
+}
+
+void setLat(float x ){
+  latitude = x;  
+}
+
+String getLongit(){
+  return longString;
+} 
+
+String getLat(){
+  return latString;
+} 
+
+void convertCoord(){
+  int i;
+  float val;
+  
+  dtostrf(latitude, 5, 5, latbuff);  //4 is mininum width, 6 is precision
+  latString += latbuff;
+  dtostrf(longitude, 5, 5, longbuff);  //4 is mininum width, 6 is precision
+  longString += longbuff;
+}
+
+void printCoord(){
+  Serial.println("GPS Coordinates");
+  Serial.print("Latitude: ");
+  Serial.println(getLat());
+  Serial.print("Longitude: ");
+  Serial.println(getLongit());
 }
 
 //HERE IS THE GSM PART
@@ -104,7 +139,21 @@ void setupGPS(){
 ////  }
 //}
 
-void placeCall(){
+void contactEmerg(){ //contacts authorities
+  placeCall();
+  //MESSAGE TRANSMISSION STUFF
+  //"CHILD IN CAR AT"
+  //"LATITUDE"
+  for(int i = 0; i < latString.length(); i++){
+    selectNumber(latString[i]);
+  }
+  //"LONGITUDE"
+  for(int i = 0; i < longString.length(); i++){
+    selectNumber(longString[i]);
+  }
+}
+
+void placeCall(){ //places the call
   if (!fona.callPhone(number)) {
     Serial.println(F("Failed"));
   } 
@@ -120,9 +169,7 @@ void placeCall(){
   delay(10000);
 }
 
-
-
-void selectNumber(char num){ 
+void selectNumber(char num){ //transmits GPS coordinates as audio
   switch(num){
     case '0':
       startPlayback(zero, sizeof(zero));
@@ -173,39 +220,3 @@ void flushSerial() {
   while (Serial.available())
     Serial.read();
 }
-
-void setLong(float x ){
-  longitude = x;  
-}
-
-void setLat(float x ){
-  latitude = x;  
-}
-
-String getLongit(){
-  return longString;
-} 
-
-String getLat(){
-  return latString;
-} 
-
-void convertCoord{
-  int i;
-  float val;
-  
-  dtostrf(latitude, 5, 5, latbuff);  //4 is mininum width, 6 is precision
-  latString += latbuff;
-  dtostrf(longitude, 5, 5, longbuff);  //4 is mininum width, 6 is precision
-  longString += longbuff;
-}
-
-void printCoord(){
-  Serial.println("GPS Coordinates");
-  Serial.print("Latitude: ");
-  Serial.println(getLat());
-  Serial.print("Longitude: ");
-  Serial.println(getLongit());
-}
-
-
