@@ -71,11 +71,12 @@ void findChild(){ //rotates servos to take measurements with thermal sensor
   
   if(childSearch()){
     //CALL FOR HELP
-    Serial.println("CHILD FOUND");
+    Serial.println("Person detected!");
     outputThermalData();
     delay(60000);  
   }
   else{
+    Serial.println("Person not detected!");
     //DO MOTION DETECTION GARBAGE
   }
 }
