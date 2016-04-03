@@ -155,13 +155,23 @@ void printCoord(){
 
 void contactEmerg(){ //contacts authorities
   placeCall();
-  //MESSAGE TRANSMISSION STUFF
-  //"CHILD IN CAR AT"
+  //"CHILD IN CAR"
+  startPlayback(msg, sizeof(msg));
+  delay(3000);
+  stopPlayback();
+  
   //"LATITUDE"
+  startPlayback(lat, sizeof(lat));
+  delay(1500);
+  stopPlayback();
   for(int i = 0; i < latString.length(); i++){
     selectNumber(latString[i]);
   }
+  
   //"LONGITUDE"
+  startPlayback(lon, sizeof(lon));
+  delay(1500);
+  stopPlayback();
   for(int i = 0; i < longString.length(); i++){
     selectNumber(longString[i]);
   }
