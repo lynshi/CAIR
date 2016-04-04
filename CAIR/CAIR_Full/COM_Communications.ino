@@ -1,8 +1,5 @@
 //Consolidates functions for calling
 
-// FONA Incoming Call Number Example
-// Listens for a call and displays the phone number of the caller (if available).
-// Use this example to add phone call detection to your own FONA sketch.
 #include <Adafruit_FONA.h>
 #include <PCM.h>
 #include <stdlib.h>
@@ -13,14 +10,6 @@
 #define FONA_TX            4
 #define FONA_RST           5
 
-// Note you need to map interrupt number to pin number
-// for your board.  On an Uno & Mega interrupt 0 is
-// digital pin 2, and on a Leonardo interrupt 0 is
-// digital pin 3.  See this page for a complete table:
-//   http://arduino.cc/en/Reference/attachInterrupt
-// Make sure this interrupt pin is connected to FONA RI!
-#define FONA_RI_INTERRUPT  0
-
 // We default to using software serial. If you want to use hardware serial
 // (because softserial isnt supported) comment out the following three lines 
 // and uncomment the HardwareSerial line
@@ -29,10 +18,6 @@
 SoftwareSerial fonaSS = SoftwareSerial(FONA_TX, FONA_RX);
 SoftwareSerial *fonaSerial = &fonaSS;
 
-// Hardware serial is also possible!
-//  HardwareSerial *fonaSerial = &Serial1;
-// this is a large buffer for replies
-char replybuffer[255];
 Adafruit_FONA fona = Adafruit_FONA(FONA_RST);
 char number[30] = {'7','3','2','3','1','8','5','3','9','6'};
 char latbuff[12];
@@ -94,7 +79,6 @@ void initiateCOM(){
     return;
   }
   Serial.println(F("FONA is OK"));
- // setupGSM(); 
   setupGPS();
 }
 
@@ -124,10 +108,7 @@ String getLat(){
   return latString;
 } 
 
-void convertCoord(){
-  int i;
-  float val;
-  
+void convertCoord(){ 
   dtostrf(latitude, 5, 5, latbuff);  //4 is mininum width, 6 is precision
   latString += latbuff;
   dtostrf(longitude, 5, 5, longbuff);  //4 is mininum width, 6 is precision
@@ -143,15 +124,6 @@ void printCoord(){
 }
 
 //HERE IS THE GSM PART
-//void setupGSM() {
-////  // Enable incoming call notification.
-////  if(fona.callerIdNotification(true, FONA_RI_INTERRUPT)) {
-////    Serial.println(F("Caller id notification enabled."));
-////  }
-////  else {
-////    Serial.println(F("Caller id notification disabled"));
-////  }
-//}
 
 void contactEmerg(){ //contacts authorities
   placeCall();
@@ -238,9 +210,4 @@ void selectNumber(char num){ //transmits GPS coordinates as audio
   
   delay(1000);
   stopPlayback();
-}
-
-void flushSerial() {
-  while (Serial.available())
-    Serial.read();
 }
