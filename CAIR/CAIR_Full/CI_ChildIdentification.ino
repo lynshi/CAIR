@@ -64,6 +64,8 @@ void findChild(){ //rotates servos to take measurements with thermal sensor
       movePan(i);
       delay(getThermalReadDelay());
       readThermalSensor();
+//      Serial.print("Reading ");
+//      Serial.println(i);
     }  
   } 
   outputThermalData(); //outputs thermal data in tabular format; for MP2 demo purposes only
