@@ -69,21 +69,21 @@ void findChild(){ //rotates servos to take measurements with thermal sensor
   outputThermalData(); //outputs thermal data in tabular format; for MP2 demo purposes only
   //outputThermalDataP();
   
-  getCoord();
-  
-  if(childSearch()){
-    //CALL FOR HELP
-    Serial.println("Person detected!");
-//    outputThermalData();
-//    delay(60000);  
-    printCoord(); //FOR MP3 DEMO ONLY
-    contactEmerg();
-  }
-  else{
-    Serial.println("Person not detected!");
-    //DO MOTION DETECTION GARBAGE
-    printCoord(); //FOR MP3 DEMO ONLY
-  }
+//  getCoord();
+//  
+//  if(childSearch()){
+//    //CALL FOR HELP
+//    Serial.println("Person detected!");
+////    outputThermalData();
+////    delay(60000);  
+//    printCoord(); //FOR MP3 DEMO ONLY
+//    contactEmerg();
+//  }
+//  else{
+//    Serial.println("Person not detected!");
+//    //DO MOTION DETECTION GARBAGE
+//    printCoord(); //FOR MP3 DEMO ONLY
+//  }
 }
 
 void testCI(){

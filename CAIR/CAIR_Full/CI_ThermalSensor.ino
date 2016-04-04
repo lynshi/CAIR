@@ -20,35 +20,37 @@ void thermalSensorSetup(){
 }
 
 int childSearch(){ //looks for a child; 1 if there is a child, 0 if not
-  setThermalPanBufferPointer(0);
-  setThermalTiltBufferPointer(0);
+  thermalPanBufferPointer = 0;
+  thermalTiltBufferPointer = 0;
   int hotPixels = 0;
   while(1){
     for(int i = 0; i < 3; i++){
       for(int j = 0; j < 3; j++){
-        if(getThermalBuffer(i + getThermalTiltBufferPointer(),j + getThermalPanBufferPointer()) >= HOTTHRESHOLD){
+        if(thermalBuffer[i + thermalTiltBufferPointer][j + thermalPanBufferPointer] >= HOTTHRESHOLD){
           hotPixels++;  
         }
       }  
     }
-    if(hotPixels >= 5){ //so I can see what's going on
-      for(int i = 0; i < 3; i++){
+    thermalTiltBufferPointer == thermalTiltBufferPointer - 2;
+    thermalPanBufferPointer == thermalPanBufferPointer - 2;
+    if(hotPixels >= 5){ 
+      for(int i = 0; i < 3; i++){ //so I can see what's going on
         for(int j = 0; j < 3; j++){
-          setThermalBuffer(0,i + getThermalTiltBufferPointer(),j + getThermalPanBufferPointer());
+          thermalBuffer[i + thermalTiltBufferPointer][j + thermalPanBufferPointer] = 0;
         }  
       }
       return 1;
     }
     else{
       hotPixels = 0;
-      if(getThermalPanBufferPointer() == 14){
-        setThermalPanBufferPointer(0);
-        setThermalTiltBufferPointer(getThermalTiltBufferPointer() + 1);  
+      if(thermalPanBufferPointer == (THERMALPANBUFFERSIZE - 2)){
+        thermalPanBufferPointer = 0;
+        thermalTiltBufferPointer = thermalTiltBufferPointer + 1;  
       }
       else{
-        setThermalPanBufferPointer(getThermalPanBufferPointer() + 1);  
+        thermalPanBufferPointer = thermalPanBufferPointer + 1;  
       }
-      if(getThermalTiltBufferPointer() == 11){
+      if(thermalTiltBufferPointer == (THERMALTILTBUFFERSIZE - 2)){
         break;  
       }
     }
