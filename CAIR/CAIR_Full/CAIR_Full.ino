@@ -10,9 +10,10 @@ void loop() {
   //only have two functions. House call functions within CI and CI within motion detection
   //activateCI();
   //detectMotion();
-  checkTemperatureStatus();
+  //checkTemperatureStatus();
   //placeCall();
-  
+  testMotors();
+//  
 //  findChild();
 //  if(childSearch()){
 //    Serial.println("Child found.");
@@ -24,6 +25,6 @@ void loop() {
 //  outputThermalData();
   
   //delay(60000);
-  delay(100);
+  delay(60000);
   //ALWAYS CONTINUALLY CHECK TO MAKE SURE CAR DOESN'T TURN BACK ON OR TEMPERATURE DROPS BELOW
 }
