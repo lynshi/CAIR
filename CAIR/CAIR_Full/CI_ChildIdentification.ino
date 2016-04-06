@@ -1,6 +1,8 @@
 //Initiates Child Identification Module
 //Provides functions to test Child Identification Module
 
+//#include<COM_Communications.h>
+
 #define SERVOLOWERBOUND 30
 #define SERVOHIGHERBOUND 135
 //#define SERVOROTATEINCREMENTS 10
@@ -71,20 +73,20 @@ void findChild(){ //rotates servos to take measurements with thermal sensor
   outputThermalData(); //outputs thermal data in tabular format; for MP2 demo purposes only
   //outputThermalDataP();
   
-  getCoord();
+  //getCoord();
   
   if(childSearch()){
     //CALL FOR HELP
     Serial.println("Person detected!");
 //    outputThermalData();
 //    delay(60000);  
-    printCoord(); //FOR MP3 DEMO ONLY
-    contactEmerg();
+    //printCoord(); //FOR MP3 DEMO ONLY
+    //contactEmerg();
   }
   else{
     Serial.println("Person not detected!");
     //DO MOTION DETECTION GARBAGE
-    printCoord(); //FOR MP3 DEMO ONLY
+    //printCoord(); //FOR MP3 DEMO ONLY
   }
 }
 
