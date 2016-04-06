@@ -17,21 +17,10 @@ void loop() {
   Serial.println("test");
   //activateCI();
   //detectMotion();
-  //checkTemperatureStatus();
+
   //placeCall();
 
-//  
   findChild();
-//  if(childSearch()){
-//    Serial.println("Child found.");
-//  }
-//  else{
-//    Serial.println("No child."); 
-//  }
-//  
-//  outputThermalData();
-  
-  //delay(60000);
   delay(60000);
   //ALWAYS CONTINUALLY CHECK TO MAKE SURE CAR DOESN'T TURN BACK ON OR TEMPERATURE DROPS BELOW
 }
