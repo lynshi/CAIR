@@ -1,19 +1,19 @@
 //Consolidates functions for calling
 
-#include "Adafruit_FONA.h"
-#include "PCM.h"
-#include "stdlib.h"
+#include <Adafruit_FONA.h>
+#include <PCM.h>
+#include <stdlib.h>
 
 // Pins which are connected to the FONA.
 // Note that this is different from FONAtest!
-#define FONA_RX            2
-#define FONA_TX            15
-#define FONA_RST           4
+#define FONA_RX            3
+#define FONA_TX            4
+#define FONA_RST           5
 
 // We default to using software serial. If you want to use hardware serial
 // (because softserial isnt supported) comment out the following three lines 
 // and uncomment the HardwareSerial line
-//#include "SoftwareSerial.h"
+#include <SoftwareSerial.h>
 
 SoftwareSerial fonaSS = SoftwareSerial(FONA_TX, FONA_RX);
 SoftwareSerial *fonaSerial = &fonaSS;

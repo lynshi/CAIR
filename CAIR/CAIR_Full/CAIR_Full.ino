@@ -1,6 +1,4 @@
 //Main file
-#include "COM_Communications.h"
-#include<SoftwareSerial.h>
 
 void setup() {
   Serial.begin(115200);
