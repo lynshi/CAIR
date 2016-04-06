@@ -4,9 +4,20 @@
 #define SERVOLOWERBOUND 30
 #define SERVOHIGHERBOUND 135
 //#define SERVOROTATEINCREMENTS 10
-
+#define SCAN 2
+#define STATUS 3
+#define CHILDFOUND 4
 int ciTestDelay = 500;
 
+void initiateBoardCOMS(){
+  pinMode(SCAN, INPUT);
+  pinMode(STATUS, OUTPUT);
+  pinMode(CHILDFOUND, OUTPUT);
+}
+int getScanPin()
+{
+  return SCAN;
+}
 int getCITestDelay(){
   return ciTestDelay;
 }
@@ -44,16 +55,15 @@ void findChild(){ //rotates servos to take measurements with thermal sensor
   if(childSearch()){
     //CALL FOR HELP
     Serial.println("Person detected!");
-//    outputThermalData();
-//    delay(60000);  
-  //  printCoord(); //FOR MP3 DEMO ONLY
-    //contactEmerg();
+    digitalWrite(CHILDFOUND, 1);
+
   }
   else{
     Serial.println("Person not detected!");
     //DO MOTION DETECTION GARBAGE
     //printCoord(); //FOR MP3 DEMO ONLY
   }
+  digitalWrite(STATUS,1);
 }
 
 
