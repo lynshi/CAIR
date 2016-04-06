@@ -4,8 +4,16 @@
 #define SERVOLOWERBOUND 30
 #define SERVOHIGHERBOUND 135
 //#define SERVOROTATEINCREMENTS 10
-
+#define SCAN 6
+#define STATUS 7
+#define CHILDFOUND 8
 int ciTestDelay = 500;
+
+void initiateBoardCOMS(){
+  pinMode(SCAN, OUTPUT);
+  pinMode(STATUS, INPUT);
+  pinMode(CHILDFOUND, INPUT);
+}
 
 int getCITestDelay(){
   return ciTestDelay;
@@ -57,10 +65,18 @@ void runCI(){ //monitor temperature and look for a child
 
 void findChild(){ //rotates servos to take measurements with thermal sensor
 //status from uno
+  digitalWrite(SCAN, 1);
+  while(1)
+  {
+     if(digitalRead(STATUS))
+    {
+    break;
+    } 
+  }
   
   getCoord();
   
-  if(1){//REPLACE THIS
+  if(digitalRead(CHILDFOUND)){
     //CALL FOR HELP
     Serial.println("Person detected!");
 //    outputThermalData();
