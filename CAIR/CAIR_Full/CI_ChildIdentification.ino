@@ -1,6 +1,8 @@
 //Initiates Child Identification Module
 //Provides functions to test Child Identification Module
 
+#include "COM_Communications.h"
+
 #define SERVOLOWERBOUND 30
 #define SERVOHIGHERBOUND 135
 //#define SERVOROTATEINCREMENTS 10

@@ -1,8 +1,8 @@
 //Controls servos
 #include <Servo.h>
 
-#define PANPIN 9
-#define TILTPIN 10
+#define PANPIN 44
+#define TILTPIN 45
 
 Servo pan;
 Servo tilt;
