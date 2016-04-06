@@ -1,6 +1,5 @@
 //Main file
 
-
 void setup() {
   Serial.begin(115200);
   //initiateCOM();
@@ -9,11 +8,9 @@ void setup() {
 }
 
 void loop() {
-  Serial.println("LOOP");
-  if(digitalRead(getScanPin()))
+  if(checkScan())
   {
     Serial.println("DO STUFF");
     findChild();
   }
-  //ALWAYS CONTINUALLY CHECK TO MAKE SURE CAR DOESN'T TURN BACK ON OR TEMPERATURE DROPS BELOW
 }
