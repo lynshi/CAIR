@@ -21,6 +21,6 @@ void loop() {
   //placeCall();
 
   findChild();
-  delay(60000);
+  delay(6000);
   //ALWAYS CONTINUALLY CHECK TO MAKE SURE CAR DOESN'T TURN BACK ON OR TEMPERATURE DROPS BELOW
 }
