@@ -9,8 +9,10 @@ void setup() {
 }
 
 void loop() {
+  Serial.println("LOOP");
   if(digitalRead(getScanPin()))
   {
+    Serial.println("DO STUFF");
     findChild();
   }
   //ALWAYS CONTINUALLY CHECK TO MAKE SURE CAR DOESN'T TURN BACK ON OR TEMPERATURE DROPS BELOW

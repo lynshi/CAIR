@@ -11,6 +11,7 @@ int ciTestDelay = 500;
 
 void initiateBoardCOMS(){
   pinMode(SCAN, OUTPUT);
+  digitalWrite(SCAN, 0);
   pinMode(STATUS, INPUT);
   pinMode(CHILDFOUND, INPUT);
 }
@@ -32,8 +33,8 @@ void initiateCI(){
 
 void activateCI(){
   if(checkCarVoltageStatus() == 0){ //if car is still off end process
-    //Serial.println("Car is OFF");
-//    displayCarVoltage();
+   // Serial.println("Car is OFF");
+ //   displayCarVoltage();
 //    delay(getCarVoltageReadDelay()); 
     return; 
   }
@@ -65,29 +66,31 @@ void runCI(){ //monitor temperature and look for a child
 
 void findChild(){ //rotates servos to take measurements with thermal sensor
 //status from uno
+Serial.println("SCAN");
   digitalWrite(SCAN, 1);
   while(1)
   {
-     if(digitalRead(STATUS))
+     if(digitalRead(STATUS)==1)
     {
+      digitalWrite(SCAN, 0);
     break;
     } 
   }
+  Serial.println("DONE");
+  //getCoord();
   
-  getCoord();
-  
-  if(digitalRead(CHILDFOUND)){
+  if(digitalRead(CHILDFOUND)==1){
     //CALL FOR HELP
     Serial.println("Person detected!");
 //    outputThermalData();
 //    delay(60000);  
-    printCoord(); //FOR MP3 DEMO ONLY
-    contactEmerg();
+  //  printCoord(); //FOR MP3 DEMO ONLY
+   // contactEmerg();
   }
-  else{
+  else if (digitalRead(CHILDFOUND==0)){
     Serial.println("Person not detected!");
     //DO MOTION DETECTION GARBAGE
-    printCoord(); //FOR MP3 DEMO ONLY
+   // printCoord(); //FOR MP3 DEMO ONLY
   }
 }
 

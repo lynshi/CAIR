@@ -12,7 +12,9 @@ int ciTestDelay = 500;
 void initiateBoardCOMS(){
   pinMode(SCAN, INPUT);
   pinMode(STATUS, OUTPUT);
+  digitalWrite(STATUS, 0);
   pinMode(CHILDFOUND, OUTPUT);
+  digitalWrite(CHILDFOUND, 0);
 }
 int getScanPin()
 {
@@ -35,6 +37,9 @@ void initiateCI(){
 
 
 void findChild(){ //rotates servos to take measurements with thermal sensor
+digitalWrite(STATUS, 0);
+digitalWrite(CHILDFOUND, 0);
+Serial.println("SCAN");
   for(int x = 0; x < (getThermalTiltBufferSize() / 4); x++){
     moveTilt(120 - x * 30);
     for(int i = SERVOHIGHERBOUND; i >=  SERVOLOWERBOUND; i -= ((SERVOHIGHERBOUND - SERVOLOWERBOUND) / ((getThermalPanBufferSize() / 4) - 1))){

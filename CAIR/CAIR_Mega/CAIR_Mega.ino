@@ -7,19 +7,21 @@
 void setup() {
   Serial.begin(115200);
   //initiateCOM();
+  
   initiateBoardCOMS();
   initiateCI(); //set up pins for child identification PUT THIS LAST
 }
 
 void loop() {
   //only have two functions. House call functions within CI and CI within motion detection
-  activateCI();
+  Serial.println("test");
+  //activateCI();
   //detectMotion();
   //checkTemperatureStatus();
   //placeCall();
 
 //  
-//  findChild();
+  findChild();
 //  if(childSearch()){
 //    Serial.println("Child found.");
 //  }
