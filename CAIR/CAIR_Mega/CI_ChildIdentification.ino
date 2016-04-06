@@ -68,6 +68,7 @@ void findChild(){ //rotates servos to take measurements with thermal sensor
 //status from uno
 Serial.println("SCAN");
   digitalWrite(SCAN, 1);
+  delay(50);
   while(1)
   {
      if(digitalRead(STATUS)==1)
