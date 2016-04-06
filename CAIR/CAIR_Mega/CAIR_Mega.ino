@@ -1,5 +1,8 @@
 //Main file
-
+#include <Adafruit_FONA.h>
+#include <PCM.h>
+#include <stdlib.h>
+#include <SoftwareSerial.h>
 
 void setup() {
   Serial.begin(115200);
@@ -13,7 +16,7 @@ void loop() {
   //detectMotion();
   //checkTemperatureStatus();
   //placeCall();
-  testMotors();
+
 //  
 //  findChild();
 //  if(childSearch()){
