@@ -28,9 +28,9 @@ the commented section below at the end of the setup() function.
 #include "Adafruit_FONA.h"
 #include "PCM.h"
 
-#define FONA_RX 2
-#define FONA_TX 3
-#define FONA_RST 4
+#define FONA_RX 50
+#define FONA_TX 51
+#define FONA_RST 22
 
 // this is a large buffer for replies
 char replybuffer[255];
