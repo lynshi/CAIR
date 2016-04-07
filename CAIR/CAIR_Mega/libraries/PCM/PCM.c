@@ -64,7 +64,7 @@
  * sox audiodump.wav -c 1 -r 8000 -u -b macstartup-8000.wav
  */
 
-int speakerPin = 11;
+int speakerPin = 10;
 unsigned char const *sounddata_data=0;
 int sounddata_length=0;
 volatile uint16_t sample;

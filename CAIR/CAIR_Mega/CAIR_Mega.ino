@@ -17,8 +17,8 @@ void loop() {
   Serial.println("test");
   //activateCI();
   //detectMotion();
-
-  placeCall();
+  contactEmerg();
+  //placeCall();
 
   //findChild();
   delay(6000);
