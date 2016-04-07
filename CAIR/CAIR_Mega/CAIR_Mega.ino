@@ -6,7 +6,7 @@
 
 void setup() {
   Serial.begin(115200);
-  //initiateCOM();
+  initiateCOM();
   
   initiateBoardCOMS();
   initiateCI(); //set up pins for child identification PUT THIS LAST
@@ -18,9 +18,9 @@ void loop() {
   //activateCI();
   //detectMotion();
 
-  //placeCall();
+  placeCall();
 
-  findChild();
+  //findChild();
   delay(6000);
   //ALWAYS CONTINUALLY CHECK TO MAKE SURE CAR DOESN'T TURN BACK ON OR TEMPERATURE DROPS BELOW
 }

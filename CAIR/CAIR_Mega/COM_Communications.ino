@@ -6,9 +6,9 @@
 
 // Pins which are connected to the FONA.
 // Note that this is different from FONAtest!
-#define FONA_RX            2
-#define FONA_TX            15
-#define FONA_RST           4
+#define FONA_RX            50
+#define FONA_TX            51
+#define FONA_RST           22
 
 // We default to using software serial. If you want to use hardware serial
 // (because softserial isnt supported) comment out the following three lines 
@@ -19,7 +19,7 @@ SoftwareSerial fonaSS = SoftwareSerial(FONA_TX, FONA_RX);
 SoftwareSerial *fonaSerial = &fonaSS;
 
 Adafruit_FONA fona = Adafruit_FONA(FONA_RST);
-char number[30] = {'7','3','2','3','1','8','5','3','9','6'};
+char number[30] = {'9','1','7','3','1','8','6','2','5','0'};//{'7','3','2','3','1','8','5','3','9','6'};
 char latbuff[12];
 char longbuff[12];
 const unsigned char zero[] PROGMEM = {
