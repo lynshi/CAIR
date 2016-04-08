@@ -76,6 +76,9 @@ String latString = "";
 String longString = "";
 
 void initiateCOM(){
+  pinMode(FONA_TX, INPUT);
+  pinMode(FONA_RX, OUTPUT);
+  delay(100);  
   fonaSerial->begin(4800);
   if (! fona.begin(*fonaSerial)) {
     Serial.println(F("Couldn't find FONA"));
@@ -168,7 +171,7 @@ void placeCall(){ //places the call
     //Serial.print(F("."));
     delay(500);
   }
-  delay(6000);
+  delay(20000);
 }
 
 void selectNumber(char num){ //transmits GPS coordinates as audio
