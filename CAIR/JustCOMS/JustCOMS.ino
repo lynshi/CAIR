@@ -76,18 +76,18 @@ float latitude, longitude, speed_kph, heading, speed_mph, altitude;
 String latString = "";
 String longString = "";
 
-//void setup(){
-//  Serial.begin(115200);
-//  initiateCOM();
-//}
-//
-//void loop(){
-//  getCoord();
-//  printCoord();
-//  //placeCall();
-//  contactEmerg();
-//  delay(60000);
-//}
+void setup(){
+  Serial.begin(115200);
+  initiateCOM();
+}
+
+void loop(){
+  getCoord();
+  printCoord();
+  //placeCall();
+  contactEmerg();
+  delay(60000);
+}
 
 void initiateCOM(){
   pinMode(FONA_TX, INPUT);
@@ -172,6 +172,10 @@ void contactEmerg(){ //contacts authorities
 //  for(int i = 0; i < longString.length(); i++){
 //    selectNumber(longString[i]);
 //  }
+
+  startPlayback(zero, sizeof(zero));
+  delay(1000);
+  stopPlayback();
 }
 
 void placeCall(){ //places the call
