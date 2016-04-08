@@ -18,8 +18,9 @@ void loop() {
   //detectMotion();
   //getCoord();
   //printCoord();
-  contactEmerg();
+  //contactEmerg();
   //placeCall();
+  findChild();
 
   
   delay(60000);

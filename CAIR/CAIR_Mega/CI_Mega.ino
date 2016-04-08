@@ -90,20 +90,20 @@ void findChild() { //rotates servos to take measurements with thermal sensor
     }
   }
   Serial.println("DONE");
-  //getCoord();
+  getCoord();
 
   if (child == 1) {
     //CALL FOR HELP
     Serial.println("Person detected!");
     //    outputThermalData();
     //    delay(60000);
-    //  printCoord(); //FOR MP3 DEMO ONLY
-    // contactEmerg();
+      printCoord(); //FOR MP3 DEMO ONLY
+     contactEmerg();
   }
   else if (child == 0) {
     Serial.println("Person not detected!");
     //DO MOTION DETECTION GARBAGE
-    // printCoord(); //FOR MP3 DEMO ONLY
+     printCoord(); //FOR MP3 DEMO ONLY
   }
 }
 
