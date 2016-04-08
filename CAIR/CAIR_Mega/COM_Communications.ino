@@ -151,7 +151,7 @@ void contactEmerg(){ //contacts authorities
   placeCall();
   //"CHILD IN CAR"
   startPlayback(msg, sizeof(msg));
-  delay(2000);
+  delay(1750);
   stopPlayback();
   startPlayback(msg2, sizeof(msg2));
   delay(1000);
@@ -161,17 +161,17 @@ void contactEmerg(){ //contacts authorities
   startPlayback(lat, sizeof(lat));
   delay(1500);
   stopPlayback();
-//  for(int i = 0; i < latString.length(); i++){
-//    selectNumber(latString[i]);
-//  }
+  for(int i = 0; i < latString.length(); i++){
+    selectNumber(latString[i]);
+  }
   
   //"LONGITUDE"
   startPlayback(lon, sizeof(lon));
   delay(1500);
   stopPlayback();
-//  for(int i = 0; i < longString.length(); i++){
-//    selectNumber(longString[i]);
-//  }
+  for(int i = 0; i < longString.length(); i++){
+    selectNumber(longString[i]);
+  }
 }
 
 void placeCall(){ //places the call
@@ -191,48 +191,30 @@ void placeCall(){ //places the call
 }
 
 void selectNumber(char num){ //transmits GPS coordinates as audio
-  switch(num){
-    case '0':
-      startPlayback(zero, sizeof(zero));
-      break;
-    case '1':
-      startPlayback(one, sizeof(one));
-      break;
-    case '2':
-      startPlayback(two, sizeof(two));
-      break;
-    case '3':
-      startPlayback(three, sizeof(three));
-      break;
-    case '4':
-      startPlayback(four, sizeof(four));
-      break;
-    case '5':
-      startPlayback(five, sizeof(five));
-      break;
-    case '6':
-      startPlayback(six, sizeof(six));
-      break;
-    case '7':
-      startPlayback(seven, sizeof(seven));
-      break;
-    case '8':
-      startPlayback(eight, sizeof(eight));
-      break;
-    case '9':
-      startPlayback(nine, sizeof(nine));
-      break;
-    case '-':
-      startPlayback(neg, sizeof(neg));
-      break;
-    case '.':
-      startPlayback(point, sizeof(point));
-      break;
-    default:
-      Serial.println("GPS Error");
-      break;
-    }
-  
+  if(num == '0')
+    startPlayback(zero, sizeof(zero));
+  else if(num == '1')
+    startPlayback(one, sizeof(one));
+  else if(num == '2')
+    startPlayback(two, sizeof(two));
+  else if(num == '3')
+    startPlayback(three, sizeof(three));
+  else if(num == '4')
+    startPlayback(four, sizeof(four));
+  else if(num == '5')
+    startPlayback(five, sizeof(five));
+  else if(num == '6')
+    startPlayback(six, sizeof(six));
+  else if(num == '7')
+    startPlayback(seven, sizeof(seven));
+//  else if(num == '8')
+//    startPlayback(eight, sizeof(eight));
+//  else if(num == '9')
+//    startPlayback(nine, sizeof(nine));
+//  else if(num == '.')
+//    startPlayback(point, sizeof(point));
+//  else if(num == '-')
+//    startPlayback(neg, sizeof(neg)); 
   delay(1000);
   stopPlayback();
 }
