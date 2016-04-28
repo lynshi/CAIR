@@ -74,8 +74,8 @@ const unsigned char point[] PROGMEM = {
 };  
 #define COORDSIZE 5
 float latitude, longitude, speed_kph, heading, speed_mph, altitude;
-String latString = "";
-String longString = "";
+//String latString = "";
+//String longString = "";
 
 //void setup(){
 //  Serial.begin(115200);
@@ -121,27 +121,31 @@ void setLat(float x ){
   latitude = x;  
 }
 
-String getLongit(){
-  return longString;
+void getLongit(){
+  for(int i = 0; longbuff[i]!='\0';i++)
+    Serial.print(longbuff[i]);
+  Serial.println();
 } 
 
-String getLat(){
-  return latString;
+void getLat(){
+  for(int i = 0; latbuff[i]!='\0';i++)
+    Serial.print(latbuff[i]);
+  Serial.println();
 } 
 
 void convertCoord(){ 
   dtostrf(latitude, 5, 5, latbuff);  //4 is mininum width, 6 is precision
-  latString += latbuff;
+  
   dtostrf(longitude, 5, 5, longbuff);  //4 is mininum width, 6 is precision
-  longString += longbuff;
+
 }
 
 void printCoord(){
   Serial.println("GPS Coordinates");
   Serial.print("Latitude: ");
-  Serial.println(getLat());
+  getLat();
   Serial.print("Longitude: ");
-  Serial.println(getLongit());
+  getLongit();
 }
 
 ////HERE IS THE GSM PART
@@ -151,28 +155,30 @@ void contactEmerg(){ //contacts authorities
   Serial.println(fona.GPSstatus());
   placeCall();
   //"CHILD IN CAR"
-  startPlayback(msg, sizeof(msg));
-  delay(1750);
-  stopPlayback();
-  startPlayback(msg2, sizeof(msg2));
-  delay(1000);
-  stopPlayback();
+//  startPlayback(msg, sizeof(msg));
+//  delay(1750);
+//  stopPlayback();
+//  startPlayback(msg2, sizeof(msg2));
+//  delay(1000);
+//  stopPlayback();
   
   //"LATITUDE"
   startPlayback(lat, sizeof(lat));
   delay(1500);
   stopPlayback();
-  for(int i = 0; i < latString.length(); i++){
-    selectNumber(latString[i]);
+  for(int i = 0; latbuff[i]!='\0'; i++){
+    selectNumber(latbuff[i]);
   }
   
   //"LONGITUDE"
   startPlayback(lon, sizeof(lon));
   delay(1500);
   stopPlayback();
-  for(int i = 0; i < longString.length(); i++){
-    selectNumber(longString[i]);
+  for(int i = 0; longbuff[i]!='\0'; i++){
+    selectNumber(longbuff[i]);
   }
+  delay(5000);
+  fona.hangUp();
 }
 
 void placeCall(){ //places the call
@@ -208,14 +214,14 @@ void selectNumber(char num){ //transmits GPS coordinates as audio
     startPlayback(six, sizeof(six));
   if(num == '7')
     startPlayback(seven, sizeof(seven));
-//  else if(num == '8')
-//    startPlayback(eight, sizeof(eight));
-//  else if(num == '9')
-//    startPlayback(nine, sizeof(nine));
-//  else if(num == '.')
-//    startPlayback(point, sizeof(point));
-//  else if(num == '-')
-//    startPlayback(neg, sizeof(neg)); 
+  if(num == '8')
+    startPlayback(eight, sizeof(eight));
+  else if(num == '9')
+    startPlayback(nine, sizeof(nine));
+  else if(num == '.')
+    startPlayback(point, sizeof(point));
+  else if(num == '-')
+    startPlayback(neg, sizeof(neg)); 
   delay(1000);
   stopPlayback();
 }

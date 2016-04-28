@@ -14,15 +14,12 @@ void setup() {
 
 void loop() {
   //only have two functions. House call functions within CI and CI within motion detection
-  //activateCI();
+  activateCI();
   //detectMotion();
   //getCoord();
   //printCoord();
   //contactEmerg();
   //placeCall();
-  findChild();
-
-  
-  delay(60000);
+  //findChild();
   //ALWAYS CONTINUALLY CHECK TO MAKE SURE CAR DOESN'T TURN BACK ON OR TEMPERATURE DROPS BELOW
 }
