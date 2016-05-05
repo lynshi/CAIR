@@ -79,14 +79,13 @@ void contactEmerg(){ //contacts authorities
   Serial.println(fona.GPSstatus());
   placeCall();
   //"CHILD IN CAR"
-
-  delay(1750);
+  playfile(14);
 
   delay(1000);
 
   
   //"LATITUDE"
-
+  playfile(12);
   delay(1500);
 
   for(int i = 0; latbuff[i]!='\0'; i++){
@@ -94,7 +93,7 @@ void contactEmerg(){ //contacts authorities
   }
   
   //"LONGITUDE"
-
+  playfile(13);
   delay(1500);
  
   for(int i = 0; longbuff[i]!='\0'; i++){
@@ -122,29 +121,27 @@ void placeCall(){ //places the call
 
 void selectNumber(char num){ //transmits GPS coordinates as audio
   if(num == '0')
-    
+    playfile(0);
   if(num == '1')
-
+    playfile(1);
   if(num == '2')
-
+    playfile(2);
   if(num == '3')
-
+    playfile(3);
   if(num == '4')
-
+    playfile(4);
   if(num == '5')
- 
+    playfile(5);
   if(num == '6')
-   
+    playfile(6); 
   if(num == '7')
-
+    playfile(7);
   if(num == '8')
- 
+    playfile(8);
   else if(num == '9')
-
+    playfile(9);
   else if(num == '.')
-
+    playfile(10);
   else if(num == '-')
-
-  delay(1000);
-
+    playfile(11);
 }
