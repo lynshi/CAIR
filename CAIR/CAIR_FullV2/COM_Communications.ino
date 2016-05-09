@@ -28,6 +28,12 @@ void initiateCOM(){
   setupGPS();
 }
 
+void setNumber(char c, int i){
+  if(i >= 0 && i < 30){
+    number[i] = c;
+  } 
+}
+
 //HERE IS THE GPS PART
 void getCoord(){
   boolean gps_success = fona.getGPS(&latitude, &longitude, &speed_kph, &heading, &altitude);

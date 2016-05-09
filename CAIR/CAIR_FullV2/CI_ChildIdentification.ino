@@ -68,15 +68,13 @@ void findChild()
   if (childSearch()) {
     //CALL FOR HELP
     Serial.println("Person detected!");
-    printCoord(); //FOR MP3 DEMO ONLY
+    //printCoord(); //FOR MP3 DEMO ONLY
     contactEmerg();
 
   }
   else {
     Serial.println("Person not detected!");
-    printCoord(); //FOR MP3 DEMO ONLY
-    //DO MOTION DETECTION GARBAGE
+    //printCoord(); //FOR MP3 DEMO ONLY
+    //DO MOTION DETECTION STUFF
   }
-
-
 }
