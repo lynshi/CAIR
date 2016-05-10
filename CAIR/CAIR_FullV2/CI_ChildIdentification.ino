@@ -1,11 +1,14 @@
 #define SERVOLOWERBOUND 30
 #define SERVOHIGHERBOUND 135
 //#define SERVOROTATEINCREMENTS 10
+#define EMERGDELAY 120000 //wait two minutes between calling parent and emergency
 int ciTestDelay = 500;
 
-void initiateCI(){
+void initiateCI() {
   thermalSensorSetup();
-  powerDetectionSetup(); //PUT LAST 
+  motionDetectionSetup();
+  thermistorSetup();
+  powerDetectionSetup(); //PUT LAST
 }
 int getCITestDelay() {
   return ciTestDelay;
@@ -33,22 +36,29 @@ void activateCI() {
   }
 }
 void runCI() { //monitor temperature and look for a child
-  while (!checkTemperatureStatus()) {
+  controlMotionLED(0);
+  while (!checkTemperatureStatus()) { //MAY GET STUCK HERE IF BROUGHT IN BY MOTION DETECTION
     if (checkCarVoltageStatus()) { //if car turns back on while the temperature is being monitored, break entire child identification process
       Serial.println("Car is back on");
       return;
     }
     delay(getTempSenseDelay());
   }
+  controlTempLED(0);
   //Serial.println("Temperature has crossed 60 degree F threshold");
   //  temperature has now crossed threshold. Check for a child. CHECK FOR TEMPERATURE AGAIN BEFORE CALLING PARENT IF CHILD IS FOUND.
-  findChild();
+  if (findChild()) {
+    contact();
+  }
+  else {
+    Serial.println("Person not detected!");
+  }
   //delay(10000);
 }
 
-void findChild()
+bool findChild() //1 child found 0 no child
 {
-   Serial.println("SCANNING");
+  Serial.println("SCANNING");
   for (int x = 0; x < (getThermalTiltBufferSize() / 4); x++) {
     moveTilt(120 - x * 30);
     for (int i = SERVOHIGHERBOUND; i >=  SERVOLOWERBOUND; i -= ((SERVOHIGHERBOUND - SERVOLOWERBOUND) / ((getThermalPanBufferSize() / 4) - 1))) {
@@ -65,16 +75,21 @@ void findChild()
   //outputThermalDataP();
   Serial.println("DONE");
   getCoord();
-  if (childSearch()) {
-    //CALL FOR HELP
-    Serial.println("Person detected!");
-    //printCoord(); //FOR MP3 DEMO ONLY
-    contactEmerg();
+  return childSearch();
+}
 
-  }
-  else {
-    Serial.println("Person not detected!");
-    //printCoord(); //FOR MP3 DEMO ONLY
-    //DO MOTION DETECTION STUFF
+void contact() { //CALL FOR HELP
+  Serial.println("Person detected!");
+  contactParent();
+  delay(EMERGDELAY);
+  if(checkTemperatureStatus()){
+    if (detectMotion) {
+      contactEmerg();
+    }
+    else {
+      if(findChild()){
+        contactEmerg(); 
+      }
+    }    
   }
 }

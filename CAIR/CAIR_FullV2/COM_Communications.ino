@@ -4,15 +4,15 @@
 #include <stdlib.h>
 
 #define FONA_RST           22
+#define COORDSIZE           5
 
 HardwareSerial *fonaSerial = &Serial1;
 
 Adafruit_FONA fona = Adafruit_FONA(FONA_RST);
-char number[30] = /*{'9','1','7','3','1','8','6','2','5','0'};*/{'7','3','2','3','1','8','5','3','9','6'};
+char number[10] = /*{'9','1','7','3','1','8','6','2','5','0'};*/{'7','3','2','3','1','8','5','3','9','6'};
+char emergNum[10] = {'7','3','2','3','1','8','5','3','9','6'};
 char latbuff[12];
 char longbuff[12];
- 
-#define COORDSIZE 5
 float latitude, longitude, speed_kph, heading, speed_mph, altitude;
 //String latString = "";
 //String longString = "";
@@ -29,7 +29,7 @@ void initiateCOM(){
 }
 
 void setNumber(char c, int i){
-  if(i >= 0 && i < 30){
+  if(i >= 0 && i < 10){
     number[i] = c;
   } 
 }
@@ -79,6 +79,9 @@ void printCoord(){
 }
 
 ////HERE IS THE GSM PART
+void contactParent(){
+  //play a different message, no coordinates needed 
+}
 
 void contactEmerg(){ //contacts authorities
   Serial.print("GPS Status: ");

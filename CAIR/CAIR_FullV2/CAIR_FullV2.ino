@@ -1,3 +1,5 @@
+//DO NOT RUN UNTIL PINS ARE CONFIRMED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 void setup() {
   Serial.begin(115200);
   Serial.println("Please press # key to begin");  
@@ -18,5 +20,7 @@ void setup() {
 
 void loop() {
   activateCI();  
-  //motion detection
+  if(detectMotion){
+    runCI();
+  }
 }
