@@ -81,12 +81,14 @@ void printCoord(){
 ////HERE IS THE GSM PART
 void contactParent(){
   //play a different message, no coordinates needed 
+  placeCall(0);
+  //"you have left your child in the car please go get him/her
 }
 
 void contactEmerg(){ //contacts authorities
   Serial.print("GPS Status: ");
   Serial.println(fona.GPSstatus());
-  placeCall();
+  placeCall(1);
   //"CHILD IN CAR"
   playfile(14);
 
@@ -112,13 +114,24 @@ void contactEmerg(){ //contacts authorities
   fona.hangUp();
 }
 
-void placeCall(){ //places the call
-  if (!fona.callPhone(number)) {
-    Serial.println(F("Failed"));
-  } 
-  else {
-    Serial.println(F("Sent!")); 
+void placeCall(int num){ //1 emergency 0 parent
+  if(num == 0){
+    if (!fona.callPhone(number)) {
+      Serial.println(F("Failed"));
+    } 
+    else {
+      Serial.println(F("Sent!")); 
+    }
   }
+  else if(num == 1){
+    if (!fona.callPhone(emergNum)) {
+      Serial.println(F("Failed"));
+    } 
+    else {
+      Serial.println(F("Sent!")); 
+    }  
+  }
+  
   delay(1000);
   while(fona.getCallStatus() != 4)
   {
