@@ -17,12 +17,13 @@ void controlMotionLED(int state){ //1 is on 0 is off
  
 bool detectMotion(){
   controlMotionLED(1);
-  val = digitalRead(MOTIONINPUT);  // read input value
-  if (val == HIGH) {            // HIGH means motion detected
-    Serial.println("Motion detected!");
-    return 1;
+  for(int i = 0; i < 5; i++){
+    val = digitalRead(MOTIONINPUT);  // read input value
+    if (val == LOW) {            // HIGH means motion detected
+      return 0;
+    }
+    delay(60);
   }
-  else{
-    return 0; 
-  }
+  Serial.println("Motion detected!");
+  return 1;
 }

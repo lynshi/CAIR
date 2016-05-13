@@ -10,7 +10,7 @@ void setup() {
   
   getPhoneNumber();
   
-  Serial.println("The program will now begin!");
+  Serial.println("The program will now begin in one second!");
   delay(1000);
   
   initiateAudio();

@@ -30,15 +30,18 @@ void getPhoneNumber(){ //allows the user to enter his/her phone number
   
   Serial.println("Please enter your phone number on the keypad. If you would like to restart entering your number, please press the * key.");
   
-  while(i < 10){
+  while(1){ //Must press # key to exit
     c = readKeypad();
-    if(c == '*' || c == "#"){
-      if(c == '*'){
-        i = 0; 
-      }
-      continue;
+    if(c == '*'){
+      i = 0;
+      continue; 
+    }
+    if(c == '#' && i >= 10){
+      return; 
+    }
+    if(i < 10){
+      setNumber(c, i);
+      i++;
     }  
-    setNumber(c, i);
-    i++
-  }  
+  }
 }
