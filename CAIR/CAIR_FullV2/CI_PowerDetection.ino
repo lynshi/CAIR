@@ -1,8 +1,8 @@
 //reads the voltage coming from the car battery to determine whether the car is on
 
 #define CARPIN A0
-#define RLARGE 302400
-#define RSMALL 98600
+#define RLARGE 299500
+#define RSMALL 98200
 #define VADJUST 0.00
 #define CARPOWERSHUTOFFPIN 12
 #define MOSFETON 0

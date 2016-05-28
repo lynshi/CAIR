@@ -34,6 +34,12 @@ void setNumber(char c, int i){
   } 
 }
 
+void displayNumber(){
+  for(int i = 0; i < 10; i++){
+    Serial.println(number[i]); 
+  }
+}
+
 //HERE IS THE GPS PART
 void getCoord(){
   boolean gps_success = fona.getGPS(&latitude, &longitude, &speed_kph, &heading, &altitude);

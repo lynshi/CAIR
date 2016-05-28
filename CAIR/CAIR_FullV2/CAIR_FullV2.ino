@@ -9,6 +9,7 @@ void setup() {
   }
   
   getPhoneNumber();
+  displayNumber();
   
   Serial.println("The program will now begin in one second!");
   delay(1000);

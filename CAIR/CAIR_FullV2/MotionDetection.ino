@@ -1,11 +1,11 @@
 //Searches for motion in the car
 
-#define MOTIONINPUT 2;
-#define MOTIONLED 3;
+#define MOTIONINPUT 2
+#define MOTIONLED 3
 
 int val = 0;                    // variable for reading the pin status
  
-motionDetectionSetup() {
+void motionDetectionSetup() {
   pinMode(MOTIONINPUT, INPUT);     // declare sensor as input
   pinMode(MOTIONLED, OUTPUT);
   controlMotionLED(0);
@@ -16,6 +16,7 @@ void controlMotionLED(int state){ //1 is on 0 is off
 }
  
 bool detectMotion(){
+  return 0; //TEMP NOT DOING THIS
   controlMotionLED(1);
   for(int i = 0; i < 5; i++){
     val = digitalRead(MOTIONINPUT);  // read input value
