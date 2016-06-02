@@ -56,7 +56,7 @@ void playfile(int filenum)
  else if(filenum == 9)
   musicPlayer.playFullFile("nine.mp3"); 
  else if(filenum == 10)
-  musicPlayer.playFullFile("point.mp3"); 
+  musicPlayer.playFullFile("dot.mp3"); 
  else if(filenum == 11)
   musicPlayer.playFullFile("neg.mp3"); 
  else if(filenum == 12)
@@ -64,5 +64,5 @@ void playfile(int filenum)
  else if(filenum == 13)
   musicPlayer.playFullFile("long.mp3"); 
  else if(filenum == 14)
-  musicPlayer.playFullFile("childcar.mp3");   
+  musicPlayer.playFullFile("car.mp3");   
 }

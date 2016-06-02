@@ -5,8 +5,8 @@
 #define RSMALL 98200
 #define VADJUST 0.00
 #define CARPOWERSHUTOFFPIN 42
-#define MOSFETON 0
-#define MOSFETOFF 1
+#define MOSFETON 1
+#define MOSFETOFF 0
 #define VOLTAGETHRESHOLD 13.25
 #define CARSTATPIN 40
 
@@ -21,7 +21,6 @@ void powerDetectionSetup(){
   controlPower(checkCarVoltageStatus()); 
   if(getCarVoltageStatus()){ //accounts for if car is on upon activation of CAIR
     digitalWrite(CARPOWERSHUTOFFPIN, MOSFETON);
-    runCI();
     return;
   }
   digitalWrite(CARPOWERSHUTOFFPIN, MOSFETOFF); //if car was off continue to operate CAIR normally and don't jump to child identification

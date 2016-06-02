@@ -5,7 +5,7 @@
 #define BCOEFFICIENT 3400.0   // Beta value for our thermistor
 #define SERIESRESISTOR 1000.0   // Value of the series resistor
 #define TEMPTHRESHOLD 60
-#define TEMPLED 5
+
 
 int tempSenseDelay = 1000;
 int i;
@@ -13,8 +13,7 @@ float temperature;
 bool temperatureStatus; //0 below threshold, 1 above threshold
 
 void thermistorSetup(){
-  pinMode(TEMPLED, OUTPUT); 
-  controlTempLED(0);
+
 }
 
 float getTemperature(){
@@ -33,12 +32,9 @@ void setTempSenseDelay(int d){
   tempSenseDelay = d; 
 }
 
-void controlTempLED(int state){ //1 on 0 off
-  digitalWrite(TEMPLED, state);
-}
+
 
 bool checkTemperatureStatus(){ //0 below threshold, 1 above threshold
-  controlTempLED(1);
   measureTemperature();
   displayTemperature();
   if(getTemperature() < TEMPTHRESHOLD){

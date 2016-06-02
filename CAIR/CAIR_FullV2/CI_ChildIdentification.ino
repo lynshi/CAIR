@@ -1,7 +1,7 @@
 #define SERVOLOWERBOUND 45
 #define SERVOHIGHERBOUND 135
 //#define SERVOROTATEINCREMENTS 10
-#define EMERGDELAY 120000 //wait two minutes between calling parent and emergency
+#define EMERGDELAY 12000 //wait two minutes between calling parent and emergency
 int ciTestDelay = 500;
 
 void initiateCI() {
@@ -19,17 +19,17 @@ void setCITestDelay(int i) {
 }
 void activateCI() {
   if (checkCarVoltageStatus() == 0) { //if car is still off end process
-    // Serial.println("Car is OFF");
-    //   displayCarVoltage();
-    //    delay(getCarVoltageReadDelay());
+      Serial.println("Car is OFF");
+      displayCarVoltage();
+      delay(getCarVoltageReadDelay());
     return;
   }
   else {
     //Serial.println("Car has turned ON");
     while (checkCarVoltageStatus()) {
-      //      Serial.println("Car is ON");
-      //      displayCarVoltage();
-      //      delay(getCarVoltageReadDelay());
+      Serial.println("Car is ON");
+      displayCarVoltage();
+      delay(getCarVoltageReadDelay());
     }
     Serial.println("Car has turned OFF");
     runCI();
@@ -44,7 +44,7 @@ void runCI() { //monitor temperature and look for a child
     }
     delay(getTempSenseDelay());
   }
-  controlTempLED(0);
+
   //Serial.println("Temperature has crossed 60 degree F threshold");
   //  temperature has now crossed threshold. Check for a child. CHECK FOR TEMPERATURE AGAIN BEFORE CALLING PARENT IF CHILD IS FOUND.
   if (findChild()) {
@@ -67,13 +67,10 @@ bool findChild() //1 child found 0 no child
       movePan(i);
       delay(getThermalReadDelay());
       readThermalSensor();
-      Serial.print("Reading ");
-      Serial.println(i);
     }
   }
   outputThermalData(); //outputs thermal data in tabular format; for MP2 demo purposes only
   //outputThermalDataP();
-  Serial.println("DONE");
   getCoord();
   return childSearch();
 }

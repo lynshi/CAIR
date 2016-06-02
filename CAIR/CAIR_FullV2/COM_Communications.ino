@@ -9,8 +9,9 @@
 HardwareSerial *fonaSerial = &Serial1;
 
 Adafruit_FONA fona = Adafruit_FONA(FONA_RST);
-char number[10] = /*{'9','1','7','3','1','8','6','2','5','0'};*/{'7','3','2','3','1','8','5','3','9','6'};
-char emergNum[10] = {'7','3','2','3','1','8','5','3','9','6'};
+char number[30] = /*{'9','1','7','3','1','8','6','2','5','0'};*/{'0','0','0','0','0','0','0','0','0','0'};
+char newnumber[30] = {'7','3','2','3','1','8','5','3','9','6'};
+char emergNum[30] = {'9','1','7','3','1','8','6','2','5','0'};
 char latbuff[12];
 char longbuff[12];
 float latitude, longitude, speed_kph, heading, speed_mph, altitude;
@@ -32,7 +33,7 @@ void setNumber(char c, int i){
   if(i >= 0 && i < 10){
     number[i] = c;
   } 
-}
+}  
 
 void displayNumber(){
   for(int i = 0; i < 10; i++){
@@ -43,6 +44,8 @@ void displayNumber(){
 //HERE IS THE GPS PART
 void getCoord(){
   boolean gps_success = fona.getGPS(&latitude, &longitude, &speed_kph, &heading, &altitude);
+  latitude = 40.50451;
+  longitude = -74.3694;
   convertCoord();
 }
 
@@ -74,6 +77,7 @@ void convertCoord(){
   dtostrf(latitude, 5, 5, latbuff);  //4 is mininum width, 6 is precision
   
   dtostrf(longitude, 5, 5, longbuff);  //4 is mininum width, 6 is precision
+ 
 }
 
 void printCoord(){
@@ -88,12 +92,18 @@ void printCoord(){
 void contactParent(){
   //play a different message, no coordinates needed 
   placeCall(0);
+    //"CHILD IN CAR"
+  playfile(14);
+  Serial.println("call parent");
+  delay(10000);
   //"you have left your child in the car please go get him/her
+  fona.hangUp();
 }
 
 void contactEmerg(){ //contacts authorities
   Serial.print("GPS Status: ");
   Serial.println(fona.GPSstatus());
+  Serial.println("call emerg");
   placeCall(1);
   //"CHILD IN CAR"
   playfile(14);
@@ -144,7 +154,7 @@ void placeCall(int num){ //1 emergency 0 parent
     //Serial.print(F("."));
     delay(500);
   }
-  delay(20000);
+  delay(10000);
 }
 
 void selectNumber(char num){ //transmits GPS coordinates as audio

@@ -21,7 +21,8 @@ void setup() {
 
 void loop() {
   activateCI();  
-  if(detectMotion){
-    runCI();
-  }
+//  if(detectMotion()
+//  ){
+//    runCI();
+//  }
 }

@@ -1,8 +1,8 @@
 //Controls servos
 #include <Servo.h>
 
-#define PANPIN 32
-#define TILTPIN 30
+#define PANPIN 30
+#define TILTPIN 32
 
 Servo pan;
 Servo tilt;
@@ -44,9 +44,9 @@ void movePan(int pos){
   delay(100);
   setPanPos(pos);
   pan.write(getPanPos());
-  Serial.println("movePan");
-  Serial.println(pan.attached());
-  Serial.println(pan.read());
+//  Serial.println("movePan");
+//  Serial.println(pan.attached());
+//  Serial.println(pan.read());
   delay(500);
   pan.detach();
 }
@@ -56,9 +56,9 @@ void moveTilt(int pos){
   delay(100);
   setTiltPos(pos);
   tilt.write(getTiltPos());
-  Serial.println("moveTilt");
-  Serial.println(tilt.attached());
-  Serial.println(tilt.read());
+//  Serial.println("moveTilt");
+//  Serial.println(tilt.attached());
+//  Serial.println(tilt.read());
   delay(500);
   tilt.detach();
 }
