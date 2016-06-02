@@ -1,13 +1,14 @@
 //reads the voltage coming from the car battery to determine whether the car is on
 
-#define CARPIN A0
+#define CARPIN A9
 #define RLARGE 299500
 #define RSMALL 98200
 #define VADJUST 0.00
-#define CARPOWERSHUTOFFPIN 12
+#define CARPOWERSHUTOFFPIN 42
 #define MOSFETON 0
 #define MOSFETOFF 1
 #define VOLTAGETHRESHOLD 13.25
+#define CARSTATPIN 40
 
 double carVoltage;
 bool carVoltageStatus;
@@ -16,6 +17,7 @@ int carVoltageReadDelay = 100;
 void powerDetectionSetup(){
   pinMode(CARPIN, INPUT);
   pinMode(CARPOWERSHUTOFFPIN, OUTPUT);
+  pinMode(CARSTATPIN, OUTPUT);
   controlPower(checkCarVoltageStatus()); 
   if(getCarVoltageStatus()){ //accounts for if car is on upon activation of CAIR
     digitalWrite(CARPOWERSHUTOFFPIN, MOSFETON);
@@ -44,6 +46,7 @@ int getCarVoltageReadDelay(){
 
 void setCarVoltageStatus(bool s){
   carVoltageStatus = s;
+  digitalWrite(CARSTATPIN, s);
 }
 
 bool getCarVoltageStatus(){

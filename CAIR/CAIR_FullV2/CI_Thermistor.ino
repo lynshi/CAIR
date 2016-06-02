@@ -1,5 +1,5 @@
 //measure ambient temperature
-#define PINTHERMISTOR A1      // Pin that the thermistor is connected to
+#define PINTHERMISTOR A8      // Pin that the thermistor is connected to
 #define THERMISTORNOMINAL 900 //1298 //1215.0   // Nominal temperature value for the thermistor
 #define TEMPERATURENOMINAL 25.0 //19.4 //19.6   // Nominl temperature depicted on the datasheet
 #define BCOEFFICIENT 3400.0   // Beta value for our thermistor

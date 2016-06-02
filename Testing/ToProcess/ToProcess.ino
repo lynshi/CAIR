@@ -14,4 +14,5 @@ void loop() {
     Serial.print(" ");
   }
   Serial.print(".");
+  //delay(60000);
 }

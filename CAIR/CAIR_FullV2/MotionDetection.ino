@@ -1,7 +1,7 @@
 //Searches for motion in the car
 
 #define MOTIONINPUT 2
-#define MOTIONLED 3
+#define MOTIONLED 38
 
 int val = 0;                    // variable for reading the pin status
  

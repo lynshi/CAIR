@@ -1,4 +1,4 @@
-#define SERVOLOWERBOUND 30
+#define SERVOLOWERBOUND 45
 #define SERVOHIGHERBOUND 135
 //#define SERVOROTATEINCREMENTS 10
 #define EMERGDELAY 120000 //wait two minutes between calling parent and emergency
